@@ -62,7 +62,7 @@ export default function Home() {
                 </span>
               </div>
               <div className="font-extrabold text-primary">
-                <Link href="/accomodations" className="underline">
+                <Link href="/accommodations" className="underline">
                   Sunparks Kempense Meren
                 </Link>
               </div>
@@ -104,24 +104,24 @@ export default function Home() {
           }
         >
           {`We have an agreement with Sunpark vacation center, if we can reach 300
-          accomodations bookings then the entire park will be for us. There are
-          489 accomodations that can accept up to 2669 members. After this date
-          Sunpark can slightly raise the prices for accomodations if we don't
+          accommodations bookings then the entire park will be for us. There are
+          489 accommodations that can accept up to 2669 members. After this date
+          Sunpark can slightly raise the prices for accommodations if we don't
           reach the 300.`}
         </Bullet>
         <Bullet
           title={
             <>
               We would like to ask if you agree to share your{" "}
-              <Link className="text-primary underline" href="/accomodations">
-                accomodations
+              <Link className="text-primary underline" href="/accommodations">
+                accommodations
               </Link>{" "}
               with other members
             </>
           }
         >
           {`To get a lot of sisters and brothers there, in case all the 489
-          accomodations are booked. As there is no stranger in the Blue Knights,
+          accommodations are booked. As there is no stranger in the Blue Knights,
           it shouldn't be a problem.`}
         </Bullet>
         <Bullet title="We will share more info during this year">
@@ -132,10 +132,10 @@ export default function Home() {
           title={
             <>
               We have tried to get the lowest{" "}
-              <Link className="text-primary underline" href="/accomodations">
+              <Link className="text-primary underline" href="/accommodations">
                 price
               </Link>{" "}
-              possible for good quality services and accomodations
+              possible for good quality services and accommodations
             </>
           }
         >
@@ -176,10 +176,10 @@ export default function Home() {
             Register
           </Button>
         </Link>
-        <Link href="/accomodations">
+        <Link href="/accommodations">
           <Button size="xxl" variant="secondary" className="flex gap-2">
             <HomeModernIcon className="size-6" />
-            See accomodations
+            See accommodations
           </Button>
         </Link>
       </div>

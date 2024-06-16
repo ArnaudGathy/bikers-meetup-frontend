@@ -50,11 +50,11 @@ export default function Menu() {
 
             <NavigationMenuItem>
               <NavigationMenuLink
-                active={pathname === "/accomodations"}
+                active={pathname === "/accommodations"}
                 className={`${navigationMenuTriggerStyle()} flex gap-2`}
-                href="/accomodations"
+                href="/accommodations"
               >
-                Accomodations
+                accommodations
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
