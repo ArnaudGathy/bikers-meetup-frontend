@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { GeistSans } from "geist/font/sans";
+import Menu from "@/components/Menu";
 
 export const metadata: Metadata = {
   title: "Blue Knights - 2025 International Convention",
@@ -15,7 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={GeistSans.className}>{children}</body>
+      <body className={`${GeistSans.className}`}>
+        <Menu />
+        <main className="mx-auto max-w-[1200px] p-8">{children}</main>
+      </body>
     </html>
   );
 }
