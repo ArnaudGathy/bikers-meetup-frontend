@@ -10,6 +10,8 @@ import {
 import { usePathname } from "next/navigation";
 import logo from "../../public/bel8_logo.jpeg";
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function Menu() {
   const pathname = usePathname();
@@ -54,9 +56,19 @@ export default function Menu() {
                 className={`${navigationMenuTriggerStyle()} flex gap-2`}
                 href="/accommodations"
               >
-                accommodations
+                Accommodations
               </NavigationMenuLink>
             </NavigationMenuItem>
+
+            <Link
+              className="flex gap-2 text-primary"
+              href="https://maps.app.goo.gl/tvhvnLrYucrDGjq18"
+              target="_blank"
+              rel="noopener noreferrer"
+              prefetch={false}
+            >
+              <Button variant="link">Location</Button>
+            </Link>
           </NavigationMenuList>
         </NavigationMenu>
 

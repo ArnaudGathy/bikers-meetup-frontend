@@ -62,7 +62,13 @@ export default function Home() {
                 </span>
               </div>
               <div className="font-extrabold text-primary">
-                <Link href="/accommodations" className="underline">
+                <Link
+                  href="https://maps.app.goo.gl/tvhvnLrYucrDGjq18"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                  prefetch={false}
+                >
                   Sunparks Kempense Meren
                 </Link>
               </div>
@@ -96,7 +102,7 @@ export default function Home() {
           title={
             <>
               We hope that you will{" "}
-              <Link className="text-primary underline" href="/register">
+              <Link className="text-primary hover:underline" href="/register">
                 book
               </Link>{" "}
               before 1st December 2024
@@ -113,7 +119,10 @@ export default function Home() {
           title={
             <>
               We would like to ask if you agree to share your{" "}
-              <Link className="text-primary underline" href="/accommodations">
+              <Link
+                className="text-primary hover:underline"
+                href="/accommodations"
+              >
                 accommodations
               </Link>{" "}
               with other members
@@ -132,7 +141,10 @@ export default function Home() {
           title={
             <>
               We have tried to get the lowest{" "}
-              <Link className="text-primary underline" href="/accommodations">
+              <Link
+                className="text-primary hover:underline"
+                href="/accommodations"
+              >
                 price
               </Link>{" "}
               possible for good quality services and accommodations
@@ -147,7 +159,7 @@ export default function Home() {
           title={
             <>
               The official start date for{" "}
-              <Link className="text-primary underline" href="/register">
+              <Link className="text-primary hover:underline" href="/register">
                 booking
               </Link>{" "}
               will be on the 23rd of July 2024.
@@ -159,7 +171,7 @@ export default function Home() {
             <>
               Please send any additional question to{" "}
               <a
-                className="text-primary underline"
+                className="text-primary hover:underline"
                 href="mailto:international.convention.2025@gmail.com"
               >
                 international.convention.2025@gmail.com
