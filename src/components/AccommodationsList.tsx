@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getAllAccommodations } from "@/lib/api/accommodations";
 import { Skeleton } from "@/components/ui/skeleton";
 import AccommodationsTableHeaders from "@/components/AccommodationsTableHeaders";
+import { Suspense } from "react";
 
 type AccommodationsListProps = {
   searchParams?: {
@@ -21,7 +22,9 @@ export default async function AccommodationsList({
 
   return (
     <table className="w-full table-auto">
-      <AccommodationsTableHeaders />
+      <Suspense>
+        <AccommodationsTableHeaders />
+      </Suspense>
       <tbody className="divide-y divide-border">
         {accommodationsList.map(
           ({ ref, link, name, beds, available, price1, price2 }) => (
