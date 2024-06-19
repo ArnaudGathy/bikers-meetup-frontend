@@ -11,7 +11,7 @@ const tableHeaders = [
   { name: "Available at start", width: "180px", fieldName: "available" },
   { name: "Separate beds", width: "150px", fieldName: "beds" },
   { name: "Price Sun-Thu", width: "150px", fieldName: "price1" },
-  { name: "Price Fri-Sat", width: "150px", fieldName: "price2" },
+  { name: "Price Fri-Fri", width: "150px", fieldName: "price2" },
   { name: "Details", width: "100px", fieldName: "ref" },
 ];
 
