@@ -63,7 +63,7 @@ export const AccommodationsListSkeleton = () => {
         {Array.from({ length: 9 }).map((_, index) => (
           <tr key={index} className="hover:bg-muted">
             <td className="px-4 py-3">
-              <Skeleton className="h-[24px] w-[220px] rounded-full" />
+              <Skeleton className="h-[24px] rounded-full" />
             </td>
             <td className="px-4 py-3">
               <Skeleton className="h-[24px] w-[40px] rounded-full" />
@@ -72,13 +72,13 @@ export const AccommodationsListSkeleton = () => {
               <Skeleton className="h-[24px] w-[40px] rounded-full" />
             </td>
             <td className="px-4 py-3">
-              <Skeleton className="h-[24px] w-[100px] rounded-full" />
+              <Skeleton className="h-[24px] w-[80px] rounded-full" />
             </td>
             <td className="px-4 py-3">
-              <Skeleton className="h-[24px] w-[100px] rounded-full" />
+              <Skeleton className="h-[24px] w-[80px] rounded-full" />
             </td>
             <td className="px-4 py-3 font-medium">
-              <Skeleton className="h-[24px] w-[100px] rounded-full" />
+              <Skeleton className="h-[24px] w-[70px] rounded-full" />
             </td>
           </tr>
         ))}

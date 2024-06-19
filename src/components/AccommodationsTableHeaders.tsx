@@ -7,12 +7,12 @@ import {
 } from "@heroicons/react/16/solid";
 
 const tableHeaders = [
-  { name: "Accommodation Type", width: "220px", fieldName: "name" },
+  { name: "Accommodation Type", width: "250px", fieldName: "name" },
   { name: "Available at start", width: "180px", fieldName: "available" },
   { name: "Separate beds", width: "150px", fieldName: "beds" },
   { name: "Price Sun-Thu", width: "150px", fieldName: "price1" },
   { name: "Price Fri-Sat", width: "150px", fieldName: "price2" },
-  { name: "Details", width: "150px", fieldName: "ref" },
+  { name: "Details", width: "100px", fieldName: "ref" },
 ];
 
 export default function AccommodationsTableHeaders() {
