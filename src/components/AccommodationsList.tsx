@@ -2,40 +2,26 @@ import { formatPrice } from "@/lib/utils";
 import Link from "next/link";
 import { getAllAccommodations } from "@/lib/api/accommodations";
 import { Skeleton } from "@/components/ui/skeleton";
+import AccommodationsTableHeaders from "@/components/AccommodationsTableHeaders";
 
-const tableHeaders = [
-  { name: "Accommodation Type", width: "300px" },
-  { name: "Available at start", width: "150px" },
-  { name: "Separate beds", width: "150px" },
-  { name: "Price Sun-Thu", width: "150px" },
-  { name: "Price Fri-Sat", width: "150px" },
-  { name: "Details", width: "150px" },
-];
-
-const TableHeaders = () => {
-  return (
-    <thead className="bg-secondary">
-      <tr>
-        {tableHeaders.map(({ name, width }) => (
-          <th
-            key={name}
-            className="px-4 py-3 text-left font-medium"
-            style={{ width }}
-          >
-            {name}
-          </th>
-        ))}
-      </tr>
-    </thead>
-  );
+type AccommodationsListProps = {
+  searchParams?: {
+    orderBy?: string;
+    method?: string;
+  };
 };
 
-export default async function AccommodationsList() {
-  const accommodationsList = await getAllAccommodations();
+export default async function AccommodationsList({
+  searchParams,
+}: AccommodationsListProps) {
+  const accommodationsList = await getAllAccommodations({
+    orderBy: searchParams?.orderBy,
+    method: searchParams?.method,
+  });
 
   return (
     <table className="w-full table-auto">
-      <TableHeaders />
+      <AccommodationsTableHeaders />
       <tbody className="divide-y divide-border">
         {accommodationsList.map(
           ({ ref, link, name, beds, available, price1, price2 }) => (
@@ -53,7 +39,7 @@ export default async function AccommodationsList() {
                   rel="noopener noreferrer"
                   prefetch={false}
                 >
-                  See details
+                  {ref}
                 </Link>
               </td>
             </tr>
@@ -67,7 +53,7 @@ export default async function AccommodationsList() {
 export const AccommodationsListSkeleton = () => {
   return (
     <table className="w-full table-auto">
-      <TableHeaders />
+      <AccommodationsTableHeaders />
       <tbody className="divide-y divide-border">
         {Array.from({ length: 9 }).map((_, index) => (
           <tr key={index} className="hover:bg-muted">

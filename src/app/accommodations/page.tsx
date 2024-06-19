@@ -6,7 +6,14 @@ import AccommodationsList, {
 } from "@/components/AccommodationsList";
 import { Suspense } from "react";
 
-export default function Accommodations() {
+type AccommodationsProps = {
+  searchParams?: {
+    orderBy?: string;
+    method?: string;
+  };
+};
+
+export default function Accommodations({ searchParams }: AccommodationsProps) {
   return (
     <div className="mx-auto">
       <div className="flex flex-col gap-16">
@@ -22,8 +29,11 @@ export default function Accommodations() {
           </div>
           <div className="overflow-x-auto">
             <Suspense fallback={<AccommodationsListSkeleton />}>
-              <AccommodationsList />
+              <AccommodationsList searchParams={searchParams} />
             </Suspense>
+            <div className="mt-4 text-sm text-muted-foreground">
+              {`* There is a tourist tax of ${formatPrice(212)} per night.`}
+            </div>
           </div>
 
           <div>
@@ -31,7 +41,7 @@ export default function Accommodations() {
               Available services
             </h3>
           </div>
-          <div className="grid gap-4 md:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-3">
             {services.map(({ title, price, description }) => (
               <Card key={title}>
                 <CardHeader size="sm">
@@ -53,46 +63,38 @@ export default function Accommodations() {
         <div className="flex flex-col gap-8">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
-              Additionnal details
+              Additional details
             </h1>
           </div>
-          <div className="grid gap-8 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <TicketIcon className="h-6 w-6 text-primary" />
-                  <h3 className="text-lg font-semibold">
-                    The registration fee includes
-                  </h3>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-2">
-                  <ul className="flex-1 list-inside list-disc">
-                    <li>Banquet dinner</li>
-                    <li>Thursday night</li>
-                    <li>Live music</li>
-                    <li>Surprise event</li>
-                  </ul>
-                  <ul className="flex-1 list-inside list-disc">
-                    <li>Welcome convention pack</li>
-                    <li>Meeting costs</li>
-                    <li>Sales Room</li>
-                    <li>Free access to FUNPARK</li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <HandPlatterIcon className="h-6 w-6 text-primary" />
-                  <h3 className="text-lg font-semibold">
-                    Meals &amp; Breakfast
-                  </h3>
-                </div>
-              </CardHeader>
-              <CardContent>
+
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <TicketIcon className="h-6 w-6 text-primary" />
+                <h3 className="text-lg font-semibold">
+                  The registration fee includes
+                </h3>
+              </div>
+              <div className="ml-8 flex gap-2">
+                <ul className="flex-1 list-inside list-disc">
+                  <li>Banquet dinner</li>
+                  <li>Thursday night</li>
+                  <li>Live music</li>
+                  <li>Surprise event</li>
+                  <li>Welcome convention pack</li>
+                  <li>Meeting costs</li>
+                  <li>Sales Room</li>
+                  <li>Free access to FUNPARK (swimming pool and fun ...)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <HandPlatterIcon className="h-6 w-6 text-primary" />
+                <h3 className="text-lg font-semibold">Meals &amp; Breakfast</h3>
+              </div>
+              <div className="ml-8">
                 <p className="mb-2">
                   The diner on wednesday and the banquet on thursday are covered
                   with the registration Fee.
@@ -103,33 +105,27 @@ export default function Accommodations() {
                   supermarket. If you rent a house you have a kitchen and have
                   the possibility to book for a kitchen package.
                 </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <CalendarCheckIcon className="h-6 w-6 text-primary" />
-                  <h3 className="text-lg font-semibold">Program</h3>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  The program will be available later and distributed at the
-                  convention.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <PlaneIcon className="h-6 w-6 text-primary" />
-                  <h3 className="text-lg font-semibold">Pre-Tour</h3>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p>Informations will be available later.</p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <CalendarCheckIcon className="h-6 w-6 text-primary" />
+                <h3 className="text-lg font-semibold">Program</h3>
+              </div>
+              <p className="ml-8">
+                The program will be available later and distributed at the
+                convention.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <PlaneIcon className="h-6 w-6 text-primary" />
+                <h3 className="text-lg font-semibold">Pre-Tour</h3>
+              </div>
+              <p className="ml-8">Informations will be available later.</p>
+            </div>
           </div>
         </div>
       </div>

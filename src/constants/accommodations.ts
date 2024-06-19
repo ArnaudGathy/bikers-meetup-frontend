@@ -2,7 +2,6 @@ export const services = [
   { title: "Sheets & blankets", price: 1195 },
   { title: "Towels", price: 950 },
   { title: "Kitchen package", price: 750 },
-  { title: "Tourist taxes per night", price: 212 },
   {
     title: "Sheets & towels package",
     price: 1650,
