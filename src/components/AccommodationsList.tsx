@@ -56,7 +56,9 @@ export default async function AccommodationsList({
 export const AccommodationsListSkeleton = () => {
   return (
     <table className="w-full table-auto">
-      <AccommodationsTableHeaders />
+      <Suspense>
+        <AccommodationsTableHeaders />
+      </Suspense>
       <tbody className="divide-y divide-border">
         {Array.from({ length: 9 }).map((_, index) => (
           <tr key={index} className="hover:bg-muted">
