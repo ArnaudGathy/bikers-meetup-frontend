@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export const services = [
   { title: "Sheets & blankets", price: 1195 },
   { title: "Towels", price: 950 },
@@ -13,3 +15,17 @@ export const services = [
     description: "Beds are ready to sleep, towels are prepared in the house",
   },
 ];
+
+export const accommodationQuerySchema = z.object({
+  orderBy: z
+    .union([
+      z.literal("name"),
+      z.literal("available"),
+      z.literal("beds"),
+      z.literal("price1"),
+      z.literal("price2"),
+      z.literal("ref"),
+    ])
+    .optional(),
+  method: z.union([z.literal("asc"), z.literal("desc")]).optional(),
+});

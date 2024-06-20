@@ -1,15 +1,26 @@
 "use server";
 import "server-only";
-import prisma from "@/lib/prisma";
 
-export const getAllAccommodations = async ({
-  orderBy,
-  method,
-}: {
+import prisma from "@/lib/prisma";
+import { accommodationQuerySchema } from "@/constants/accommodations";
+
+export const getAllAccommodations = async (params: {
   orderBy?: string;
   method?: string;
 }) => {
+  const validation = accommodationQuerySchema.safeParse(params);
+
+  if (
+    !validation.success ||
+    validation.data.orderBy === undefined ||
+    validation.data.method === undefined
+  ) {
+    return prisma.accommodation.findMany();
+  }
+
   return prisma.accommodation.findMany({
-    orderBy: { [orderBy ?? "beds"]: method ?? "asc" },
+    orderBy: {
+      [validation.data.orderBy]: validation.data.method,
+    },
   });
 };

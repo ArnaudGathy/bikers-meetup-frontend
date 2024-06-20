@@ -5,6 +5,7 @@ import {
   ChevronUpDownIcon,
   ChevronUpIcon,
 } from "@heroicons/react/16/solid";
+import { accommodationQuerySchema } from "@/constants/accommodations";
 
 const tableHeaders = [
   { name: "Accommodation Type", width: "250px", fieldName: "name" },
@@ -41,9 +42,16 @@ export default function AccommodationsTableHeaders() {
   };
 
   const getChevronIcon = (fieldName: string) => {
-    if (!existingOrderBy) {
+    if (
+      !accommodationQuerySchema.safeParse({
+        orderBy: existingOrderBy,
+        method: existingMethod,
+      }).success
+    ) {
       return <ChevronUpDownIcon className="size-4" />;
-    } else if (existingOrderBy === fieldName) {
+    }
+
+    if (existingOrderBy === fieldName) {
       if (existingMethod === "asc") {
         return <ChevronUpIcon className="size-4" />;
       }
@@ -51,6 +59,8 @@ export default function AccommodationsTableHeaders() {
         return <ChevronDownIcon className="size-4" />;
       }
     }
+
+    return null;
   };
 
   return (
