@@ -22,9 +22,9 @@ export default function Accommodations({ searchParams }: AccommodationsProps) {
             <h1 className="text-3xl font-bold tracking-tight">
               Event Accommodations
             </h1>
-            <p className="mt-4 text-gray-500 dark:text-gray-400">
-              Find the perfect accommodation for your stay at our upcoming
-              event.
+            <p className="text-gray-500 dark:text-gray-400">
+              You will receive a link for the accommodation booking after your
+              registration.
             </p>
           </div>
           <div className="overflow-x-auto">
@@ -40,6 +40,9 @@ export default function Accommodations({ searchParams }: AccommodationsProps) {
             <h3 className="text-lg font-bold tracking-tight">
               Available services
             </h3>
+            <p className="text-gray-500 dark:text-gray-400">
+              Prices per stay, per person
+            </p>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {services.map(({ title, price, description }) => (
@@ -91,17 +94,33 @@ export default function Accommodations({ searchParams }: AccommodationsProps) {
 
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
-                <HandPlatterIcon className="h-6 w-6 text-primary" />
-                <h3 className="text-lg font-semibold">Meals &amp; Breakfast</h3>
+                <CoffeeIcon className="h-6 w-6 text-primary" />
+                <h3 className="text-lg font-semibold">Breakfast</h3>
               </div>
-              <div className="ml-8">
-                <p className="mb-2">
-                  The diner on wednesday and the banquet on thursday are covered
+              <div className="ml-8 space-y-2">
+                <p>
+                  You can book a breakfast package. Prices are per person and
+                  depend on the length of your stay.
+                </p>
+                <ul className="list-inside list-disc">
+                  <li>{`7 days is ${formatPrice(7750)} for an adult and ${formatPrice(4250)} for a child 3-12yr (7x for the price of 5)`}</li>
+                  <li>{`5 days is ${formatPrice(6200)} for an adult and ${formatPrice(3400)} for a child 3-12yr (5x for the price of 4)`}</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <UtensilsIcon className="h-6 w-6 text-primary" />
+                <h3 className="text-lg font-semibold">Meals</h3>
+              </div>
+              <div className="ml-8 space-y-2">
+                <p>
+                  The diner on Wednesday and the banquet on Thursday are covered
                   with the registration Fee.
                 </p>
                 <p>
-                  You can book a breakfast package (4+1 free) for about 60€. For
-                  the other meals there are 3 restaurants on site and a
+                  For the other meals there are 3 restaurants on site and a
                   supermarket. If you rent a house you have a kitchen and have
                   the possibility to book for a kitchen package.
                 </p>
@@ -156,7 +175,7 @@ function CalendarCheckIcon({ className }: { className?: string }) {
   );
 }
 
-function HandPlatterIcon({ className }: { className?: string }) {
+function CoffeeIcon({ className }: { className?: string }) {
   return (
     <svg
       className={className}
@@ -170,12 +189,31 @@ function HandPlatterIcon({ className }: { className?: string }) {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M12 3V2" />
-      <path d="M5 10a7.1 7.1 0 0 1 14 0" />
-      <path d="M4 10h16" />
-      <path d="M2 14h12a2 2 0 1 1 0 4h-2" />
-      <path d="m15.4 17.4 3.2-2.8a2 2 0 0 1 2.8 2.9l-3.6 3.3c-.7.8-1.7 1.2-2.8 1.2h-4c-1.1 0-2.1-.4-2.8-1.2L5 18" />
-      <path d="M5 14v7H2" />
+      <path d="M10 2v2" />
+      <path d="M14 2v2" />
+      <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" />
+      <path d="M6 2v2" />
+    </svg>
+  );
+}
+
+function UtensilsIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+      <path d="M7 2v20" />
+      <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
     </svg>
   );
 }

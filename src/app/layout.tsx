@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${GeistSans.className}`}>
+      <body className={`${GeistSans.className} overflow-scroll`}>
         <Menu />
         <main className="mx-auto max-w-[1200px] p-8">{children}</main>
       </body>
