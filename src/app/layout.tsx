@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { GeistSans } from "geist/font/sans";
 import Menu from "@/components/Menu";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Blue Knights - 2025 International Convention",
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body className={`${GeistSans.className} overflow-scroll`}>
         <Menu />
         <main className="mx-auto max-w-[1200px] p-8">{children}</main>
+        <Toaster />
       </body>
     </html>
   );

@@ -22,7 +22,11 @@ export default function Accommodations({ searchParams }: AccommodationsProps) {
             <h1 className="text-3xl font-bold tracking-tight">
               Event Accommodations
             </h1>
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-gray-500">
+              Find the perfect accommodation for your stay at our upcoming
+              event.
+            </p>
+            <p className="mt-4 text-gray-500">
               You will receive a link for the accommodation booking after your
               registration.
             </p>
@@ -40,9 +44,7 @@ export default function Accommodations({ searchParams }: AccommodationsProps) {
             <h3 className="text-lg font-bold tracking-tight">
               Available services
             </h3>
-            <p className="text-gray-500 dark:text-gray-400">
-              Prices per stay, per person
-            </p>
+            <p className="text-gray-500">Prices per stay, per person</p>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {services.map(({ title, price, description }) => (

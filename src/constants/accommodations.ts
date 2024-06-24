@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+export const T_SHIRT_UNIT_PRICE = 1900;
+export const REGISTRATION_FEE = 18000;
+
 export const services = [
   { title: "Sheets & blankets", price: 1195 },
   { title: "Towels", price: 950 },
