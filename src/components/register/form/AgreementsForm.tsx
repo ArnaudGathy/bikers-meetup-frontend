@@ -22,7 +22,7 @@ export default function AgreementsForm({
         <FormFieldCheckbox
           form={form}
           name="agreements.data"
-          label="By subscribing to this convention, I authorize the Blue Knights Belgium VIII committee to keep my data during the meeting and his preparation."
+          label="By subscribing to this convention, I authorize the Blue Knights Belgium VIII committee to keep my data during the meeting and its preparation."
           description="I have the right to ask for my personal data to be deleted at any time by sending an email to international.convention.2025@gmail.com"
           required
         />
