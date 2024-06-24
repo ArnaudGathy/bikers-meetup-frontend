@@ -35,18 +35,16 @@ interface SettingsLayoutProps {
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
   return (
     <div className="mx-auto">
-      <div className="space-y-4">
-        <h2 className="text-3xl font-bold tracking-tight">Register</h2>
-        <div>
-          <p className="text-muted-foreground">
-            Please fill out the form below to register to the 2025 International
-            Convention.
-          </p>
-          <p className="text-muted-foreground">
-            You will receive a link for the accommodation booking by mail after
-            your registration.
-          </p>
-        </div>
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Register</h1>
+        <p className="text-gray-500">
+          Please fill out the form below to register to the 2025 International
+          Convention.
+        </p>
+        <p className="mt-4 text-gray-500">
+          You will receive a link for the accommodation booking by mail after
+          your registration.
+        </p>
       </div>
       <Separator className="my-6" />
       <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
