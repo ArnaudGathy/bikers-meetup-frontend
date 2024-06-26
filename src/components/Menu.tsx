@@ -2,18 +2,14 @@
 
 import {
   NavigationMenu,
-  NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { usePathname } from "next/navigation";
 import logo from "../../public/bel8_logo.jpeg";
 import Image from "next/image";
+import MenuItem from "@/components/MenuItem";
 
 export default function Menu() {
-  const pathname = usePathname();
-
   return (
     <header className="border-b py-2">
       <div className="mx-auto flex max-w-[1200px] justify-between px-8">
@@ -38,41 +34,18 @@ export default function Menu() {
               </div>
             </NavigationMenuLink>
 
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                active={pathname === "/register"}
-                className={`${navigationMenuTriggerStyle()} flex gap-2`}
-                href="/register"
-              >
-                Register
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                active={pathname === "/accommodations"}
-                className={`${navigationMenuTriggerStyle()} flex gap-2`}
-                href="/accommodations"
-              >
-                Accommodations
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+            <MenuItem href="/register" label="Register" />
+            <MenuItem href="/accommodations" label="Accommodations" />
           </NavigationMenuList>
         </NavigationMenu>
 
-        <NavigationMenu className="flex justify-end">
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                active={pathname === "/admin"}
-                className={navigationMenuTriggerStyle()}
-                href="/admin"
-              >
-                Admin
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+        <div className="flex gap-4">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <MenuItem href="/admin" label="Admin" />
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
       </div>
     </header>
   );
