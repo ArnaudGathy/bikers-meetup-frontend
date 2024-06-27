@@ -22,8 +22,8 @@ export default function EmergencyContactForm({
           required
         />
         <FormFieldPhoneNumber
-          prefixName="emergencyPhone.prefix"
-          numberName="emergencyPhone.number"
+          prefixName="emergencyPhonePrefix"
+          numberName="emergencyPhoneNumber"
           form={form}
         />
       </div>

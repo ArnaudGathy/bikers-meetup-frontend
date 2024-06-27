@@ -42,8 +42,8 @@ export default function InformationForm({
         />
 
         <FormFieldPhoneNumber
-          prefixName="phone.prefix"
-          numberName="phone.number"
+          prefixName="phonePrefix"
+          numberName="phoneNumber"
           form={form}
         />
 
@@ -51,7 +51,7 @@ export default function InformationForm({
           <FormFieldInput
             className="w-full"
             reactForm={form}
-            name="birthdate.day"
+            name="day"
             label="Birth day"
             placeholder="01"
             autoComplete="bday-day"
@@ -62,7 +62,7 @@ export default function InformationForm({
           <FormFieldInput
             className="w-full"
             reactForm={form}
-            name="birthdate.month"
+            name="month"
             label="Birth month"
             placeholder="01"
             autoComplete="bday-month"
@@ -74,7 +74,7 @@ export default function InformationForm({
           <FormFieldInput
             className="w-full"
             reactForm={form}
-            name="birthdate.year"
+            name="year"
             label="Birth year"
             placeholder="1960"
             autoComplete="bday-year"

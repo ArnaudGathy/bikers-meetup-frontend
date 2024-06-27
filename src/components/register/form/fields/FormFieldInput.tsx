@@ -48,13 +48,7 @@ export default function FormFieldInput<
         return (
           <FormItem className={className}>
             {label && (
-              <FormLabel
-                required={required}
-                disabled={rest.disabled}
-                // className={cn({
-                //   "cursor-not-allowed opacity-50": rest.disabled,
-                // })}
-              >
+              <FormLabel required={required} disabled={rest.disabled}>
                 {label}
               </FormLabel>
             )}

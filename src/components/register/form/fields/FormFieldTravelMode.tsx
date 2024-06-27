@@ -15,7 +15,7 @@ import {
 import { UseFormReturn } from "react-hook-form";
 import { RegisterForm } from "@/app/register/page";
 import { cn } from "@/lib/utils";
-import { TravelModes } from "@/lib/schemas/RegisterFormSchema";
+import { TravelModes } from "@/lib/schemas/registerFormSchema";
 
 export default function FormFieldTravelMode({
   form,

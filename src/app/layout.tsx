@@ -3,6 +3,10 @@ import "./globals.css";
 import { GeistSans } from "geist/font/sans";
 import Menu from "@/components/Menu";
 import { Toaster } from "@/components/ui/sonner";
+import { enUS } from "date-fns/locale";
+import { setDefaultOptions } from "date-fns";
+
+setDefaultOptions({ locale: enUS });
 
 export const metadata: Metadata = {
   title: "Blue Knights - 2025 International Convention",

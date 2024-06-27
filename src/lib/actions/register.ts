@@ -1,16 +1,29 @@
 "use server";
 import "server-only";
 
-export type FormState = {
-  message: string;
-  fields?: Record<string, string>;
-  issues?: string[];
-};
+import { RegisterForm } from "@/app/register/page";
+import { getISODate } from "@/lib/utils";
+import { registerSchema } from "@/lib/schemas/registerSchema";
 
-export const register = async (prevState: FormState, data: FormData) => {
-  const values = Object.fromEntries(data);
+export const register = async (data: RegisterForm) => {
+  const validation = registerSchema.safeParse({
+    ...data,
+    emergencyPhone: `${data.emergencyPhonePrefix}${data.emergencyPhoneNumber}`,
+    phone: `${data.phonePrefix}${data.phoneNumber}`,
+    birthdate: getISODate({
+      day: data.day,
+      month: data.month,
+      year: data.year,
+    }),
+  });
+
+  if (!validation.success) {
+    console.error(validation.error);
+    throw new Error("Invalid data");
+  }
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   // eslint-disable-next-line no-console
-  console.log("values", values);
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  return { message: "Registered" };
+  console.log("validation.data", validation.data);
 };

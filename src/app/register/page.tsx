@@ -12,8 +12,7 @@ import BookingForm from "@/components/register/form/BookingForm";
 import AgreementsForm from "@/components/register/form/AgreementsForm";
 import TotalAndSubmitForm from "@/components/register/form/TotalAndSubmitForm";
 import { register } from "@/lib/actions/register";
-import { useFormState } from "react-dom";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -22,27 +21,22 @@ import {
   formSchema,
   TravelModes,
   TShirtsSizes,
-} from "@/lib/schemas/RegisterFormSchema";
+} from "@/lib/schemas/registerFormSchema";
+import { toast } from "sonner";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const testValues = {
   firstName: "aa",
   lastName: "aa",
   email: "a@a.com",
-  phone: {
-    prefix: "+32",
-    number: "4589621",
-  },
-  birthdate: {
-    day: "1",
-    month: "1",
-    year: "1991",
-  },
+  phonePrefix: "+32",
+  phoneNumber: "4589621",
+  day: "01",
+  month: "01",
+  year: "1991",
   emergencyName: "test",
-  emergencyPhone: {
-    prefix: "+32",
-    number: "4896326",
-  },
+  emergencyPhonePrefix: "+32",
+  emergencyPhoneNumber: "4896326",
   street: "a",
   number: "a",
   box: "a",
@@ -61,31 +55,23 @@ const testValues = {
   languages: "z, f, d",
   tshirtsAmount: "2",
   tshirtsSize: TShirtsSizes.L,
-  agreements: {
-    pay: true,
-    data: true,
-    picture: false,
-  },
+  hasAgreedToPay: true,
+  hasAgreedToData: true,
+  hasAgreedToPicture: false,
 };
 
 const defaultValues = {
   firstName: "",
   lastName: "",
   email: "",
-  phone: {
-    prefix: "",
-    number: "",
-  },
-  birthdate: {
-    day: "",
-    month: "",
-    year: "",
-  },
+  phonePrefix: "",
+  phoneNumber: "",
+  day: "",
+  month: "",
+  year: "",
   emergencyName: "",
-  emergencyPhone: {
-    prefix: "",
-    number: "",
-  },
+  emergencyPhonePrefix: "",
+  emergencyPhone: "",
   street: "",
   number: "",
   box: "",
@@ -104,35 +90,37 @@ const defaultValues = {
   languages: "",
   tshirtsAmount: "",
   tshirtsSize: undefined,
-  agreements: {
-    pay: undefined,
-    data: undefined,
-    picture: false,
-  },
+  hasAgreedToPay: undefined,
+  hasAgreedToData: undefined,
+  hasAgreedToPicture: false,
 };
 
 export type RegisterForm = z.infer<typeof formSchema>;
 
 export default function Register() {
-  const formRef = useRef<HTMLFormElement>(null);
   const form = useForm<RegisterForm>({
     resolver: zodResolver(formSchema),
     mode: "onTouched",
     //defaultValues: testValues,
     defaultValues,
   });
-  const [state, formAction] = useFormState(register, {
-    message: "",
-  });
+
   const [isLoading, setIsLoading] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
 
-  useEffect(() => {
-    if (state.message !== "") {
-      setIsLoading(false);
+  const handleSubmit = async (data: RegisterForm) => {
+    try {
+      setIsLoading(true);
+      await register(data);
       setIsRegistered(true);
+    } catch (e) {
+      toast(
+        "Could not register. Please contact an administrator at international.convention.2025@gmail.com",
+      );
+    } finally {
+      setIsLoading(false);
     }
-  }, [state.message]);
+  };
 
   return (
     <div>
@@ -157,17 +145,7 @@ export default function Register() {
       ) : (
         <Form {...form}>
           <form
-            ref={formRef}
-            action={formAction}
-            onSubmit={(event) => {
-              event.preventDefault();
-              void form.handleSubmit(() => {
-                if (!!formRef.current) {
-                  setIsLoading(true);
-                  void formAction(new FormData(formRef.current));
-                }
-              })(event);
-            }}
+            onSubmit={form.handleSubmit((data) => handleSubmit(data))}
             className="space-y-8"
           >
             <InformationForm form={form} />

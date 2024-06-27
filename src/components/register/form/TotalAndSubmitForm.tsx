@@ -15,7 +15,7 @@ import {
   T_SHIRT_UNIT_PRICE,
 } from "@/constants/accommodations";
 import Loader from "@/components/Loader";
-import { BookingModes } from "@/lib/schemas/RegisterFormSchema";
+import { BookingModes } from "@/lib/schemas/registerFormSchema";
 
 export default function TotalAndSubmitForm({
   form,

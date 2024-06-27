@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { cn, formatPrice } from "@/lib/utils";
 import { T_SHIRT_UNIT_PRICE } from "@/constants/accommodations";
-import { BookingModes, TShirtsSizes } from "@/lib/schemas/RegisterFormSchema";
+import { BookingModes, TShirtsSizes } from "@/lib/schemas/registerFormSchema";
 
 const getModeText = (mode: BookingModes) => {
   switch (mode) {

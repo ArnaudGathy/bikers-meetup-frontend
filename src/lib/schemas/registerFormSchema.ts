@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { getISODate } from "@/lib/utils";
+import { isValid, parseISO } from "date-fns";
 
 export enum BookingModes {
   YES = "YES",
@@ -40,63 +42,59 @@ export const formSchema = z
       .string()
       .email({ message: "Email is required." })
       .max(256, { message: "Email is too long." }),
-    phone: z.object({
-      prefix: z
-        .string()
-        .max(5, { message: "Invalid country code" })
-        .min(2, { message: "Required" }),
-      number: z
-        .string()
-        .max(10, { message: "Phone number is too long." })
-        .min(5, { message: "Phone number is required." }),
-    }),
-    birthdate: z.object({
-      day: z
-        .string()
-        .min(1, { message: "The day is required" })
-        .refine((value) => !isNaN(Number(value)), {
-          message: "The day should be a number",
-        })
-        .refine(
-          (value) => {
-            const num = Number(value);
-            return num >= 1 && num <= 31;
-          },
-          {
-            message: "The day should be between 1 and 31",
-          },
-        ),
-      month: z
-        .string()
-        .min(1, { message: "The month is required" })
-        .refine((value) => !isNaN(Number(value)), {
-          message: "The month should be a number",
-        })
-        .refine(
-          (value) => {
-            const num = Number(value);
-            return num >= 1 && num <= 12;
-          },
-          {
-            message: "The month should be between 1 and 12",
-          },
-        ),
-      year: z
-        .string()
-        .min(4, { message: "The year is required (4 digits)" })
-        .refine((value) => !isNaN(Number(value)), {
-          message: "The year should be a number",
-        })
-        .refine(
-          (value) => {
-            const num = Number(value);
-            return num >= 1900 && num <= 2025;
-          },
-          {
-            message: "The year should be between 1900 and 2007",
-          },
-        ),
-    }),
+    phonePrefix: z
+      .string()
+      .max(5, { message: "Invalid country code" })
+      .min(2, { message: "Required" }),
+    phoneNumber: z
+      .string()
+      .max(10, { message: "Phone number is too long." })
+      .min(5, { message: "Phone number is required." }),
+    day: z
+      .string()
+      .min(2, { message: "The day is required (2 digits, like 01)" })
+      .refine((value) => !isNaN(Number(value)), {
+        message: "The day should be a number",
+      })
+      .refine(
+        (value) => {
+          const num = Number(value);
+          return num >= 1 && num <= 31;
+        },
+        {
+          message: "The day should be between 1 and 31",
+        },
+      ),
+    month: z
+      .string()
+      .min(2, { message: "The month is required (2 digits, like 05)" })
+      .refine((value) => !isNaN(Number(value)), {
+        message: "The month should be a number",
+      })
+      .refine(
+        (value) => {
+          const num = Number(value);
+          return num >= 1 && num <= 12;
+        },
+        {
+          message: "The month should be between 1 and 12",
+        },
+      ),
+    year: z
+      .string()
+      .min(4, { message: "The year is required (4 digits)" })
+      .refine((value) => !isNaN(Number(value)), {
+        message: "The year should be a number",
+      })
+      .refine(
+        (value) => {
+          const num = Number(value);
+          return num >= 1900 && num <= 2025;
+        },
+        {
+          message: "The year should be between 1900 and 2007",
+        },
+      ),
     street: z
       .string()
       .max(100, { message: "Street name is too long." })
@@ -119,16 +117,14 @@ export const formSchema = z
       .string()
       .max(90, { message: "Emergency contact name is too long." })
       .min(1, { message: "Emergency contact name is required." }),
-    emergencyPhone: z.object({
-      prefix: z
-        .string()
-        .max(5, { message: "Invalid country code" })
-        .min(2, { message: "Required" }),
-      number: z
-        .string()
-        .max(10, { message: "Phone number is too long." })
-        .min(5, { message: "Phone number is required." }),
-    }),
+    emergencyPhonePrefix: z
+      .string()
+      .max(5, { message: "Invalid country code" })
+      .min(2, { message: "Required" }),
+    emergencyPhoneNumber: z
+      .string()
+      .max(10, { message: "Phone number is too long." })
+      .min(5, { message: "Phone number is required." }),
     chapter: z
       .string()
       .max(80, { message: "Chapter name is too long." })
@@ -160,23 +156,41 @@ export const formSchema = z
     languages: z.union([z.literal(""), z.string()]),
     tshirtsAmount: z.union([z.literal(""), z.string()]),
     tshirtsSize: z.union([z.literal(undefined), z.nativeEnum(TShirtsSizes)]),
-    agreements: z.object({
-      pay: z.boolean({ message: "You must accept the condition." }).refine(
+    hasAgreedToPay: z
+      .boolean({ message: "You must accept the condition." })
+      .refine(
         (val) => {
           return val;
         },
         { message: "You must accept the condition." },
       ),
-      data: z.boolean({ message: "You must accept the condition." }).refine(
+    hasAgreedToData: z
+      .boolean({ message: "You must accept the condition." })
+      .refine(
         (val) => {
           return val;
         },
         { message: "You must accept the condition." },
       ),
-      picture: z.boolean(),
-    }),
+    hasAgreedToPicture: z.boolean(),
   })
   .superRefine((values, ctx) => {
+    if (values.day !== "" && values.month !== "" && values.year !== "") {
+      const parsedDate = parseISO(
+        getISODate({
+          day: values.day,
+          month: values.month,
+          year: values.year,
+        }),
+      );
+      if (!isValid(parsedDate)) {
+        ctx.addIssue({
+          message: "The birthdate is invalid.",
+          code: z.ZodIssueCode.custom,
+          path: ["day"],
+        });
+      }
+    }
     if (values.booking === BookingModes.WITH_SOMEONE) {
       if (values.staysWith === "") {
         ctx.addIssue({

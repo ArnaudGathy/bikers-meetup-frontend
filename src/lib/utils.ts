@@ -10,3 +10,15 @@ export const formatPrice = (price: number) =>
     style: "currency",
     currency: "EUR",
   }).format(price / 100);
+
+export const getISODate = ({
+  day,
+  month,
+  year,
+}: {
+  day: string;
+  month: string;
+  year: string;
+}) => {
+  return `${year}-${month}-${day}`;
+};
