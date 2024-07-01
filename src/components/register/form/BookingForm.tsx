@@ -21,7 +21,11 @@ import {
 } from "@/components/ui/select";
 import { cn, formatPrice } from "@/lib/utils";
 import { T_SHIRT_UNIT_PRICE } from "@/constants/accommodations";
-import { BookingModes, TShirtsSizes } from "@/lib/schemas/registerFormSchema";
+import {
+  BookingModes,
+  tShirtSizeTranslation,
+  TShirtsSizes,
+} from "@/lib/schemas/registerFormSchema";
 
 const getModeText = (mode: BookingModes) => {
   switch (mode) {
@@ -175,9 +179,9 @@ export default function BookingForm({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {Object.values(TShirtsSizes).map((mode) => (
-                      <SelectItem key={mode} value={mode}>
-                        {mode}
+                    {Object.values(TShirtsSizes).map((size) => (
+                      <SelectItem key={size} value={size}>
+                        {tShirtSizeTranslation[size]}
                       </SelectItem>
                     ))}
                   </SelectContent>

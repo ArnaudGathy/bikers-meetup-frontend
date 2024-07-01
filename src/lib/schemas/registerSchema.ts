@@ -23,7 +23,10 @@ export const registerSchema = z
       .string()
       .max(15, { message: "Invalid phone number" })
       .min(7, { message: "Required" }),
-    birthdate: z.string().date(),
+    birthdate: z
+      .string()
+      .date()
+      .transform((date) => `${date}T00:00:00Z`),
     street: z
       .string()
       .max(100, { message: "Street name is too long." })
@@ -77,9 +80,12 @@ export const registerSchema = z
       message: "Booking information is required.",
     }),
     willShareRoom: z.boolean(),
-    staysWith: z.union([z.literal(""), z.string()]),
-    languages: z.union([z.literal(""), z.string()]),
-    tshirtsAmount: z.union([z.literal(""), z.string()]),
+    staysWith: z.union([z.literal("").transform(() => null), z.string()]),
+    languages: z.union([z.literal("").transform(() => null), z.string()]),
+    tshirtsAmount: z.union([
+      z.literal("").transform(() => null),
+      z.coerce.number(),
+    ]),
     tshirtsSize: z.union([z.literal(undefined), z.nativeEnum(TShirtsSizes)]),
     hasAgreedToPay: z.literal(true),
     hasAgreedToData: z.literal(true),
@@ -95,7 +101,7 @@ export const registerSchema = z
         });
       }
 
-      if (values.staysWith.length > 90) {
+      if (values.staysWith && values.staysWith.length > 90) {
         ctx.addIssue({
           message: "Name of the person is too long.",
           code: z.ZodIssueCode.custom,
@@ -116,7 +122,7 @@ export const registerSchema = z
         });
       }
 
-      if (values.languages.length > 90) {
+      if (values.languages && values.languages.length > 90) {
         ctx.addIssue({
           message: "Languages are too long.",
           code: z.ZodIssueCode.custom,
@@ -126,7 +132,7 @@ export const registerSchema = z
     }
 
     if (
-      values.tshirtsAmount !== "" &&
+      !!values.tshirtsAmount &&
       Number(values.tshirtsAmount) > 0 &&
       values.tshirtsSize === undefined
     ) {

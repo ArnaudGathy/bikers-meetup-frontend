@@ -15,7 +15,10 @@ import {
 import { UseFormReturn } from "react-hook-form";
 import { RegisterForm } from "@/app/register/page";
 import { cn } from "@/lib/utils";
-import { TravelModes } from "@/lib/schemas/registerFormSchema";
+import {
+  TravelModes,
+  travelModeTranslation,
+} from "@/lib/schemas/registerFormSchema";
 
 export default function FormFieldTravelMode({
   form,
@@ -40,7 +43,7 @@ export default function FormFieldTravelMode({
             <SelectContent>
               {Object.values(TravelModes).map((mode) => (
                 <SelectItem key={mode} value={mode}>
-                  {mode}
+                  {travelModeTranslation[mode]}
                 </SelectItem>
               ))}
             </SelectContent>

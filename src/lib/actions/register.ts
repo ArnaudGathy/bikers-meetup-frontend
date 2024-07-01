@@ -4,10 +4,12 @@ import "server-only";
 import { RegisterForm } from "@/app/register/page";
 import { getISODate } from "@/lib/utils";
 import { registerSchema } from "@/lib/schemas/registerSchema";
+import prisma from "@/lib/prisma";
 
 export const register = async (data: RegisterForm) => {
   const validation = registerSchema.safeParse({
     ...data,
+    tshirtsAmount: data.tshirtsAmount,
     emergencyPhone: `${data.emergencyPhonePrefix}${data.emergencyPhoneNumber}`,
     phone: `${data.phonePrefix}${data.phoneNumber}`,
     birthdate: getISODate({
@@ -18,12 +20,8 @@ export const register = async (data: RegisterForm) => {
   });
 
   if (!validation.success) {
-    console.error(validation.error);
     throw new Error("Invalid data");
   }
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  // eslint-disable-next-line no-console
-  console.log("validation.data", validation.data);
+  await prisma.registration.create({ data: validation.data });
 };

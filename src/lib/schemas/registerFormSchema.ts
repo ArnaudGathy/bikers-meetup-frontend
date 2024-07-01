@@ -4,17 +4,17 @@ import { isValid, parseISO } from "date-fns";
 
 export enum BookingModes {
   YES = "YES",
-  WITH_SOMEONE = "SOMEONE_ELSE_BOOKED",
+  WITH_SOMEONE = "WITH_SOMEONE",
   NO = "NO",
 }
 
 export enum TravelModes {
-  BOAT = "Boat",
-  CAR = "Car",
-  MOTORCYCLE = "Motorcycle",
-  PLANE = "Plane",
-  SPACE_SHUTTLE = "Space Shuttle",
-  TRAIN = "Train",
+  BOAT = "BOAT",
+  CAR = "CAR",
+  MOTORCYCLE = "MOTORCYCLE",
+  PLANE = "PLANE",
+  SPACE_SHUTTLE = "SPACE_SHUTTLE",
+  TRAIN = "TRAIN",
 }
 
 export enum TShirtsSizes {
@@ -22,11 +22,37 @@ export enum TShirtsSizes {
   M = "M",
   L = "L",
   XL = "XL",
-  "2XL" = "2XL",
-  "3XL" = "3XL",
-  "4XL" = "4XL",
-  "5XL" = "5XL",
+  "2XL" = "TwoXL",
+  "3XL" = "ThreeXL",
+  "4XL" = "FourXL",
+  "5XL" = "FiveXL",
 }
+
+export const bookingModeTranslation = {
+  [BookingModes.YES]: "Yes",
+  [BookingModes.WITH_SOMEONE]: "Staying with someone else",
+  [BookingModes.NO]: "No",
+};
+
+export const travelModeTranslation = {
+  [TravelModes.BOAT]: "Boat",
+  [TravelModes.CAR]: "Car",
+  [TravelModes.MOTORCYCLE]: "Motorcycle",
+  [TravelModes.PLANE]: "Plane",
+  [TravelModes.SPACE_SHUTTLE]: "Space shuttle",
+  [TravelModes.TRAIN]: "Train",
+};
+
+export const tShirtSizeTranslation = {
+  [TShirtsSizes.S]: "S",
+  [TShirtsSizes.M]: "M",
+  [TShirtsSizes.L]: "L",
+  [TShirtsSizes.XL]: "XL",
+  [TShirtsSizes["2XL"]]: "2XL",
+  [TShirtsSizes["3XL"]]: "3XL",
+  [TShirtsSizes["4XL"]]: "4XL",
+  [TShirtsSizes["5XL"]]: "5XL",
+};
 
 export const formSchema = z
   .object({
