@@ -42,7 +42,11 @@ export default function Menu() {
         <div className="flex gap-4">
           <NavigationMenu>
             <NavigationMenuList>
-              <MenuItem href="/admin" label="Admin" />
+              <MenuItem
+                href="/admin"
+                label="Admin"
+                extraMatchingRoutes={["/login"]}
+              />
             </NavigationMenuList>
           </NavigationMenu>
         </div>

@@ -10,15 +10,20 @@ import { usePathname } from "next/navigation";
 type MenuItemProps = {
   href: string;
   label: string;
+  extraMatchingRoutes?: string[];
 };
 
-export default function MenuItem({ href, label }: MenuItemProps) {
+export default function MenuItem({
+  href,
+  label,
+  extraMatchingRoutes = [],
+}: MenuItemProps) {
   const pathname = usePathname();
 
   return (
     <NavigationMenuItem>
       <NavigationMenuLink
-        active={pathname === href}
+        active={[...extraMatchingRoutes, href].includes(pathname)}
         className={`${navigationMenuTriggerStyle()} flex gap-2`}
         href={href}
       >
