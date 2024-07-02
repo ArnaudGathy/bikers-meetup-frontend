@@ -3,7 +3,7 @@ import { services } from "@/constants/accommodations";
 import { formatPrice } from "@/lib/utils";
 import AccommodationsList, {
   AccommodationsListSkeleton,
-} from "@/components/AccommodationsList";
+} from "@/app/accommodations/AccommodationsList";
 import { Suspense } from "react";
 
 type AccommodationsProps = {

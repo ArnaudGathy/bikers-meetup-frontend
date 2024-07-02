@@ -2,7 +2,7 @@ import { formatPrice } from "@/lib/utils";
 import Link from "next/link";
 import { getAllAccommodations } from "@/lib/api/accommodations";
 import { Skeleton } from "@/components/ui/skeleton";
-import AccommodationsTableHeaders from "@/components/AccommodationsTableHeaders";
+import AccommodationsTableHeaders from "@/app/accommodations/AccommodationsTableHeaders";
 import { Suspense } from "react";
 
 type AccommodationsListProps = {

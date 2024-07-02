@@ -4,6 +4,7 @@ import {
   REGISTRATION_FEE,
   T_SHIRT_UNIT_PRICE,
 } from "@/constants/accommodations";
+import { tShirtSizeTranslation } from "@/lib/schemas/registerFormSchema";
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -43,7 +44,8 @@ export const registrationCompleted = async ({
                         <li>Convention fee per person: ${formatPrice(REGISTRATION_FEE)}</li>
                         ${
                           !!hasTShirts
-                            ? `<li>T-shirts size ${size} (${formatPrice(T_SHIRT_UNIT_PRICE)} piece) : ${tshirtsAmount} x ${formatPrice(T_SHIRT_UNIT_PRICE)} = ${formatPrice(T_SHIRT_UNIT_PRICE * Number(tshirtsAmount))}</li>`
+                            ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                              `<li>T-shirts size ${tShirtSizeTranslation[size]} : ${tshirtsAmount} x ${formatPrice(T_SHIRT_UNIT_PRICE)} = ${formatPrice(T_SHIRT_UNIT_PRICE * Number(tshirtsAmount))}</li>`
                             : ""
                         }
                         ${
