@@ -1,4 +1,9 @@
 import AWS from "aws-sdk";
+import { formatPrice } from "@/lib/utils";
+import {
+  REGISTRATION_FEE,
+  T_SHIRT_UNIT_PRICE,
+} from "@/constants/accommodations";
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -6,8 +11,13 @@ AWS.config.update({
   region: "eu-north-1",
 });
 
-export const registrationCompleted = async ({ targetMail }) => {
+export const registrationCompleted = async ({
+  targetMail,
+  tshirtsAmount,
+  size,
+}) => {
   const ses = new AWS.SES({ apiVersion: "2010-12-01" });
+  const hasTShirts = tshirtsAmount !== "" && Number(tshirtsAmount) > 0;
 
   try {
     await ses
@@ -30,8 +40,17 @@ export const registrationCompleted = async ({ targetMail }) => {
                         Hello dear blue knights, you have completed the first step of your registration. To fulfil this, you still have to pay the intl. convention fee and eventual t-shirts.
                       </p>
                       <ul>
-                        <li>Convention fee per person: 180€</li>
-                        <li>T-shirt per piece: €19</li>
+                        <li>Convention fee per person: ${formatPrice(REGISTRATION_FEE)}</li>
+                        ${
+                          !!hasTShirts
+                            ? `<li>T-shirts size ${size} (${formatPrice(T_SHIRT_UNIT_PRICE)} piece) : ${tshirtsAmount} x ${formatPrice(T_SHIRT_UNIT_PRICE)} = ${formatPrice(T_SHIRT_UNIT_PRICE * Number(tshirtsAmount))}</li>`
+                            : ""
+                        }
+                        ${
+                          !!hasTShirts
+                            ? `<li><strong>Total to pay : ${formatPrice(T_SHIRT_UNIT_PRICE * Number(tshirtsAmount) + REGISTRATION_FEE)}</strong></li>`
+                            : ""
+                        }
                       </ul>
                         <p>Payment informations :</p>
                         <p>
