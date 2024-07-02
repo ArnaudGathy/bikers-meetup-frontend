@@ -6,5 +6,5 @@ import { unstable_noStore as noStore } from "next/cache";
 
 export const getAllRegistrations = async () => {
   noStore();
-  return prisma.registration.findMany();
+  return prisma.registration.findMany({ orderBy: { id: "asc" } });
 };
