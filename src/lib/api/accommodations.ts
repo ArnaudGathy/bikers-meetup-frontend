@@ -15,7 +15,7 @@ export const getAllAccommodations = async (params: {
     validation.data.orderBy === undefined ||
     validation.data.method === undefined
   ) {
-    return prisma.accommodation.findMany();
+    return prisma.accommodation.findMany({ orderBy: { id: "asc" } });
   }
 
   return prisma.accommodation.findMany({

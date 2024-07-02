@@ -4,28 +4,28 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model Gift {
   id           String  @id @default(cuid())
   name         String
   link         String?
-  ownedBy      User    @relation("owner", fields: [ownedById], references: [id])
   ownedById    String
-  addedBy      User    @relation("added", fields: [addedById], references: [id])
   addedById    String
-  selectedBy   User?   @relation("selected", fields: [selectedById], references: [id])
   selectedById String?
+  addedBy      User    @relation("added", fields: [addedById], references: [id])
+  ownedBy      User    @relation("owner", fields: [ownedById], references: [id])
+  selectedBy   User?   @relation("selected", fields: [selectedById], references: [id])
 }
 
 model User {
   id            String @id @default(cuid())
   name          String
   email         String @unique
-  ownedGifts    Gift[] @relation("owner")
   addedGifts    Gift[] @relation("added")
+  ownedGifts    Gift[] @relation("owner")
   selectedGifts Gift[] @relation("selected")
 }
 
@@ -34,6 +34,57 @@ model Admin {
   displayName String
   username    String @unique
   password    String
+}
+
+model Registration {
+  id                   Int            @id @default(autoincrement())
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime?      @updatedAt
+  hasPaidRegistration  Boolean        @default(false)
+  hasPaidTshirts       Boolean        @default(false)
+  hasPaidAccommodation Boolean        @default(false)
+  firstName            String
+  lastName             String
+  email                String
+  phone                String
+  birthdate            DateTime
+  street               String
+  number               String
+  box                  String
+  country              String
+  zip                  String
+  city                 String
+  emergencyName        String
+  emergencyPhone       String
+  chapter              String
+  chapterFunction      String
+  brand                String
+  model                String
+  licencePlate         String
+  travelMode           TravelModes
+  booking              BookingModes
+  willShareRoom        Boolean
+  staysWith            String?
+  languages            String?
+  tshirtsAmount        Int?
+  tshirtsSize          TShirtsSizes?
+  hasAgreedToPay       Boolean
+  hasAgreedToData      Boolean
+  hasAgreedToPicture   Boolean
+  accommodationId      Int?
+  accommodation        Accommodation? @relation("accommodation", fields: [accommodationId], references: [id])
+}
+
+model Accommodation {
+  id            Int            @id @default(autoincrement())
+  ref           String
+  link          String
+  name          String
+  beds          Int
+  available     Int
+  price1        Int
+  price2        Int
+  registrations Registration[] @relation("accommodation")
 }
 
 enum TravelModes {
@@ -60,50 +111,4 @@ enum TShirtsSizes {
   ThreeXL
   FourXL
   FiveXL
-}
-
-model Registration {
-  id                 Int            @id @default(autoincrement())
-  firstName          String
-  lastName           String
-  email              String
-  phone              String
-  birthdate          DateTime
-  street             String
-  number             String
-  box                String
-  country            String
-  zip                String
-  city               String
-  emergencyName      String
-  emergencyPhone     String
-  chapter            String
-  chapterFunction    String
-  brand              String
-  model              String
-  licencePlate       String
-  travelMode         TravelModes
-  booking            BookingModes
-  willShareRoom      Boolean
-  staysWith          String?
-  languages          String?
-  tshirtsAmount      Int?
-  tshirtsSize        TShirtsSizes?
-  hasAgreedToPay     Boolean
-  hasAgreedToData    Boolean
-  hasAgreedToPicture Boolean
-  accommodation      Accommodation? @relation("accommodation", fields: [accommodationId], references: [id])
-  accommodationId    Int?
-}
-
-model Accommodation {
-  id            Int            @id @default(autoincrement())
-  ref           String
-  link          String
-  name          String
-  beds          Int
-  available     Int
-  price1        Int
-  price2        Int
-  registrations Registration[] @relation("accommodation")
 }
