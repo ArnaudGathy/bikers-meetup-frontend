@@ -70,6 +70,10 @@ export default function Register() {
     try {
       setIsLoading(true);
       await register(data);
+      // TODO waiting for AWS SES production
+      // await fetch(`/api/mail?target=${data.email}`, {
+      //   method: "POST",
+      // });
       setIsRegistered(true);
     } catch (e) {
       console.error(e);
@@ -88,12 +92,19 @@ export default function Register() {
           <Alert>
             <AlertTitle>Congratulations !</AlertTitle>
             <AlertDescription className="flex flex-col gap-2">
-              <div>
+              <div className="my-4">
                 <div>
                   You have been successfully registered to the 2025
                   International Convention.
                 </div>
-                <div>You will receive a confirmation email shortly.</div>
+                <div>
+                  You will receive a confirmation email shortly containing the
+                  payment information for the registration fee and the eventual
+                  t-shirts.
+                </div>
+                <div className="font-bold text-primary">
+                  {"Please check your SPAMs if you didn't receive the email."}
+                </div>
               </div>
               <Link href="/">
                 <Button size="sm">Go home</Button>
