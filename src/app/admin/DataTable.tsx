@@ -19,6 +19,8 @@ import { Registration } from "@prisma/client";
 import { columns } from "@/app/admin/Columns";
 import DetailsSheet from "@/app/admin/DetailsSheet";
 import { clsx } from "clsx";
+import { seed } from "@/lib/seed";
+import { Button } from "@/components/ui/button";
 
 export function DataTable({
   data,
@@ -39,6 +41,17 @@ export function DataTable({
 
   return (
     <>
+      {process.env.NODE_ENV === "development" && (
+        <Button
+          onClick={() => {
+            for (let i = 0; i < 5; i++) {
+              void seed();
+            }
+          }}
+        >
+          Seed
+        </Button>
+      )}
       <DetailsSheet selectedRow={selectedRow} setSelectedRow={setSelectedRow} />
       <div className="w-full rounded-md border">
         <Table>
