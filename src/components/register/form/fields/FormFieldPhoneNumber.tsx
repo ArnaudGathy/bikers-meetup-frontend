@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/command";
 import { useState } from "react";
 import FormFieldInput from "@/components/register/form/fields/FormFieldInput";
+import CountryFlag from "@/components/CountryFlag";
 
 type FormFieldPhoneNumberProps = {
   form: UseFormReturn<RegisterForm>;
@@ -64,7 +65,7 @@ export default function FormFieldPhoneNumber({
                     >
                       {!!selectedCountry ? (
                         <div className="space-x-2">
-                          <span>{selectedCountry.flag}</span>
+                          <CountryFlag country={selectedCountry.code} />
                           <span>{selectedCountry.dialCode}</span>
                         </div>
                       ) : (
@@ -104,7 +105,7 @@ export default function FormFieldPhoneNumber({
                               )}
                             />
                             <div className="space-x-2 text-muted-foreground">
-                              <span>{country.flag}</span>
+                              <CountryFlag country={country.code} />
                               <span>{country.name}</span>
                               <span>({country.dialCode})</span>
                             </div>

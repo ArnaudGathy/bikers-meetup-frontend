@@ -2,52 +2,59 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Registration } from "@prisma/client";
-import { countries } from "@/constants/countries";
-import { format } from "date-fns";
-import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/20/solid";
+import { CheckBadgeIcon } from "@heroicons/react/20/solid";
 import { BookingModes } from "@/lib/schemas/registerFormSchema";
+import CountryFlag from "@/components/CountryFlag";
+import { formatPrice, getTotal } from "@/lib/utils";
+import MarkAsPaidButton from "@/app/admin/MarkAsPaidButton";
+
+const IsPaidIcon = () => <CheckBadgeIcon className="size-5 text-primary" />;
 
 export const columns: ColumnDef<Registration>[] = [
   {
-    header: "Registered on",
-    accessorFn: ({ createdAt }) =>
-      format(new Date(createdAt), "d MMM 'at' kk':'mm"),
+    header: "ID",
+    accessorKey: "id",
   },
   {
     header: "Name",
-    cell: ({
-      row: {
-        original: { firstName, lastName, country },
-      },
-    }) => {
-      const foundCountry = countries.find((c) => c.code === country);
-      return (
-        <div className="flex gap-2">
-          {foundCountry && <div>{foundCountry.flag}</div>}
-          <div>{`${firstName} ${lastName}`}</div>
-        </div>
-      );
-    },
-  },
-  {
-    header: "E-mail",
-    accessorKey: "email",
+    accessorFn: ({ firstName, lastName }) => `${firstName} ${lastName}`,
   },
   {
     header: "Phone",
     accessorKey: "phone",
   },
   {
+    header: "E-mail",
+    accessorKey: "email",
+  },
+  {
+    header: "Chapter",
+    cell: ({
+      row: {
+        original: { chapter, country },
+      },
+    }) => (
+      <div className="flex gap-2">
+        <CountryFlag country={country} />
+        <div>{chapter}</div>
+      </div>
+    ),
+  },
+  {
+    header: "Total",
+    accessorFn: ({ tshirtsAmount }) => formatPrice(getTotal(tshirtsAmount)),
+  },
+  {
     header: "Fee",
     cell: ({
       row: {
-        original: { hasPaidRegistration },
+        original: { hasPaidRegistration, id },
       },
     }) => {
       return hasPaidRegistration ? (
-        <CheckCircleIcon className="size-5 text-primary" />
+        <IsPaidIcon />
       ) : (
-        <XCircleIcon className="size-5 text-destructive" />
+        <MarkAsPaidButton id={id} field="hasPaidRegistration" />
       );
     },
   },
@@ -55,16 +62,16 @@ export const columns: ColumnDef<Registration>[] = [
     header: "Acco.",
     cell: ({
       row: {
-        original: { hasPaidAccommodation, booking },
+        original: { hasPaidAccommodation, id, booking },
       },
     }) => {
       if (booking === BookingModes.YES) {
         return (
           <div>
             {hasPaidAccommodation ? (
-              <CheckCircleIcon className="size-5 text-primary" />
+              <IsPaidIcon />
             ) : (
-              <XCircleIcon className="size-5 text-destructive" />
+              <MarkAsPaidButton id={id} field="hasPaidAccommodation" />
             )}
           </div>
         );

@@ -25,6 +25,7 @@ import { countries, Country } from "@/constants/countries";
 import { FieldPath, UseFormReturn } from "react-hook-form";
 import { RegisterForm } from "@/app/register/page";
 import { useState } from "react";
+import CountryFlag from "@/components/CountryFlag";
 
 type FormFieldCountryProps = {
   form: UseFormReturn<RegisterForm>;
@@ -63,7 +64,7 @@ export default function FormFieldCountry({
                   >
                     {!!selectedCountry ? (
                       <div className="space-x-2">
-                        <span>{selectedCountry.flag}</span>
+                        <CountryFlag country={selectedCountry.code} />
                         <span>{selectedCountry.name}</span>
                       </div>
                     ) : (
@@ -103,7 +104,7 @@ export default function FormFieldCountry({
                             )}
                           />
                           <div className="space-x-2 text-muted-foreground">
-                            <span>{country.flag}</span>
+                            <CountryFlag country={country.code} />
                             <span>{country.name}</span>
                           </div>
                         </CommandItem>

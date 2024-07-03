@@ -1,4 +1,4 @@
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, getTotal, getTshirtsTotal } from "@/lib/utils";
 import {
   REGISTRATION_FEE,
   T_SHIRT_UNIT_PRICE,
@@ -28,7 +28,7 @@ export const registrationCompleted = async ({
 
   try {
     const hasTshirts = tshirtsAmount !== "" && Number(tshirtsAmount) > 0;
-    const TshirtsTotal = Number(tshirtsAmount || 0) * T_SHIRT_UNIT_PRICE;
+    const TshirtsTotal = getTshirtsTotal(tshirtsAmount);
 
     const apiInstance = new TransactionalEmailsApi();
     apiInstance.setApiKey(0, process.env.BREVO_API_KEY);
@@ -47,7 +47,7 @@ export const registrationCompleted = async ({
       tshirtsAmount,
       tshirtsUnitPrice: formatPrice(T_SHIRT_UNIT_PRICE),
       tshirtsTotal: formatPrice(TshirtsTotal),
-      total: formatPrice(TshirtsTotal + REGISTRATION_FEE),
+      total: formatPrice(getTotal(tshirtsAmount)),
     };
 
     await apiInstance.sendTransacEmail(sendSmtpEmail);

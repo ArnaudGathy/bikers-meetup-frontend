@@ -1,4 +1,5 @@
 import {
+  Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -8,24 +9,35 @@ import { Registration } from "@prisma/client";
 
 export default function DetailsSheet({
   selectedRow,
+  setSelectedRow,
 }: {
   selectedRow: Registration | null;
+  setSelectedRow: (row: Registration | null) => void;
 }) {
   if (!selectedRow) {
     return null;
   }
 
   return (
-    <SheetContent className="w-[600px]">
-      <SheetHeader>
-        <SheetTitle>
-          Details about{" "}
-          <span className="text-primary">{`${selectedRow?.firstName} ${selectedRow?.lastName}`}</span>
-        </SheetTitle>
-        <SheetDescription asChild>
-          <pre>{JSON.stringify(selectedRow, null, 2)}</pre>
-        </SheetDescription>
-      </SheetHeader>
-    </SheetContent>
+    <Sheet
+      open={!!selectedRow}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) {
+          setSelectedRow(null);
+        }
+      }}
+    >
+      <SheetContent className="w-[600px]">
+        <SheetHeader>
+          <SheetTitle>
+            Details about{" "}
+            <span className="text-primary">{`${selectedRow?.firstName} ${selectedRow?.lastName}`}</span>
+          </SheetTitle>
+          <SheetDescription asChild>
+            <pre>{JSON.stringify(selectedRow, null, 2)}</pre>
+          </SheetDescription>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
   );
 }

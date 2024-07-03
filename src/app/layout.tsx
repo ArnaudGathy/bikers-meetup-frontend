@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { GeistSans } from "geist/font/sans";
 import Menu from "@/components/Menu";
 import { Toaster } from "@/components/ui/sonner";
