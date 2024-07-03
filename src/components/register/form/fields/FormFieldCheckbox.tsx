@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { FieldPath, UseFormReturn } from "react-hook-form";
 import { RegisterForm } from "@/app/register/page";
 import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
 
 export default function FormFieldCheckbox({
   form,
@@ -23,7 +24,7 @@ export default function FormFieldCheckbox({
   form: UseFormReturn<RegisterForm>;
   name: FieldPath<RegisterForm>;
   label: string;
-  description?: string;
+  description?: ReactNode;
   disabled?: boolean;
   asCard?: boolean;
   required?: boolean;

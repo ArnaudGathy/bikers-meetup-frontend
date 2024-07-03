@@ -57,9 +57,9 @@ model Registration {
   emergencyPhone       String
   chapter              String
   chapterFunction      String
-  brand                String
-  model                String
-  licencePlate         String
+  brand                String?
+  model                String?
+  licencePlate         String?
   travelMode           TravelModes
   booking              BookingModes
   willShareRoom        Boolean

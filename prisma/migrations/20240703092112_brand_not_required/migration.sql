@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Registration" ALTER COLUMN "brand" DROP NOT NULL,
+ALTER COLUMN "model" DROP NOT NULL,
+ALTER COLUMN "licencePlate" DROP NOT NULL;

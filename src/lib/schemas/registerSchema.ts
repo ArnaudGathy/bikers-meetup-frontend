@@ -61,18 +61,9 @@ export const registerSchema = z
       .string()
       .max(80, { message: "Function is too long." })
       .min(1, { message: "Function is required." }),
-    brand: z
-      .string()
-      .max(50, { message: "Motorcycle brand is too long." })
-      .min(1, { message: "Motorcycle brand is required." }),
-    model: z
-      .string()
-      .max(50, { message: "Motorcycle model is too long." })
-      .min(1, { message: "Motorcycle model is required." }),
-    licencePlate: z
-      .string()
-      .max(50, { message: "Licence plate is too long." })
-      .min(1, { message: "Licence plate is required." }),
+    brand: z.string().max(50, { message: "Motorcycle brand is too long." }),
+    model: z.string().max(50, { message: "Motorcycle model is too long." }),
+    licencePlate: z.string().max(50, { message: "Licence plate is too long." }),
     travelMode: z.nativeEnum(TravelModes, {
       message: "Travel mode is required.",
     }),

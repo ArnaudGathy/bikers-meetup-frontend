@@ -39,7 +39,6 @@ export default function ClubForm({
             name="brand"
             label="Motorcycle brand"
             placeholder="Triumph"
-            required
           />
           <FormFieldInput
             className="w-full"
@@ -47,7 +46,6 @@ export default function ClubForm({
             name="model"
             label="Motorcycle model"
             placeholder="Bonneville"
-            required
           />
           <FormFieldInput
             className="w-full"
@@ -55,7 +53,6 @@ export default function ClubForm({
             name="licencePlate"
             label="Motorcycle licence plate"
             placeholder="0-ABC-123"
-            required
           />
         </div>
 
