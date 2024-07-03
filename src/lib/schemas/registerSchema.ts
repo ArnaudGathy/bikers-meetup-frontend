@@ -7,14 +7,10 @@ import {
 
 export const registerSchema = z
   .object({
-    firstName: z
+    name: z
       .string()
-      .max(50, { message: "First name is too long." })
-      .min(1, { message: "First name is required." }),
-    lastName: z
-      .string()
-      .max(50, { message: "Last name is too long." })
-      .min(1, { message: "Last name is required." }),
+      .max(100, { message: "Name is too long." })
+      .min(1, { message: "Name is required." }),
     email: z
       .string()
       .email({ message: "Email is required." })

@@ -15,7 +15,7 @@ export default function MarkAsPaidButton({
     <div>
       <form action={setPaid}>
         <Button type="submit" size="xs" variant="outline">
-          <CheckIcon className="size-4" />
+          <CheckIcon className="mr-1 size-4 text-green-500" /> Check
         </Button>
       </form>
     </div>

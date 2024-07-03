@@ -31,7 +31,7 @@ export default function DetailsSheet({
         <SheetHeader>
           <SheetTitle>
             Details about{" "}
-            <span className="text-primary">{`${selectedRow?.firstName} ${selectedRow?.lastName}`}</span>
+            <span className="text-primary">{`${selectedRow.name}`}</span>
           </SheetTitle>
           <SheetDescription asChild>
             <pre>{JSON.stringify(selectedRow, null, 2)}</pre>

@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${GeistSans.className} overflow-scroll`}>
+      <body className={`${GeistSans.className} overflow-y-scroll`}>
         <Menu />
         <main className="mx-auto max-w-[1200px] p-8">{children}</main>
         <Toaster />

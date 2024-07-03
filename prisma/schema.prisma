@@ -42,8 +42,7 @@ model Registration {
   updatedAt            DateTime?      @updatedAt
   hasPaidRegistration  Boolean        @default(false)
   hasPaidAccommodation Boolean        @default(false)
-  firstName            String
-  lastName             String
+  name                 String
   email                String
   phone                String
   birthdate            DateTime

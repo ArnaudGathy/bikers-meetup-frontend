@@ -2,7 +2,6 @@ import { registrationCompleted } from "@/lib/serverless/sendmail";
 import { TShirtsSizes } from "@/lib/schemas/registerFormSchema";
 
 export const dynamic = "force-dynamic";
-
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {

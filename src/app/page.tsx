@@ -91,6 +91,7 @@ export default function Home() {
           alt="Logo of the 2025 Blue Knights® International Convention"
           width="550"
           sizes="(max-width: 768px) 33vw, (max-width: 1200px) 50vw, 100vw"
+          priority
         />
       </div>
 

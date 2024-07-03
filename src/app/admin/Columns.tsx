@@ -2,13 +2,19 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Registration } from "@prisma/client";
-import { CheckBadgeIcon } from "@heroicons/react/20/solid";
 import { BookingModes } from "@/lib/schemas/registerFormSchema";
 import CountryFlag from "@/components/CountryFlag";
 import { formatPrice, getTotal } from "@/lib/utils";
 import MarkAsPaidButton from "@/app/admin/MarkAsPaidButton";
+import { Badge } from "@/components/ui/badge";
+import { CheckBadgeIcon } from "@heroicons/react/16/solid";
 
-const IsPaidIcon = () => <CheckBadgeIcon className="size-5 text-primary" />;
+const IsPaidIcon = () => (
+  <Badge variant="success">
+    <CheckBadgeIcon className="mr-1 size-4" />
+    Paid
+  </Badge>
+);
 
 export const columns: ColumnDef<Registration>[] = [
   {
@@ -17,7 +23,7 @@ export const columns: ColumnDef<Registration>[] = [
   },
   {
     header: "Name",
-    accessorFn: ({ firstName, lastName }) => `${firstName} ${lastName}`,
+    accessorKey: "name",
   },
   {
     header: "Phone",
@@ -46,6 +52,7 @@ export const columns: ColumnDef<Registration>[] = [
   },
   {
     header: "Fee",
+    meta: { isCentered: true },
     cell: ({
       row: {
         original: { hasPaidRegistration, id },
@@ -60,6 +67,7 @@ export const columns: ColumnDef<Registration>[] = [
   },
   {
     header: "Acco.",
+    meta: { isCentered: true },
     cell: ({
       row: {
         original: { hasPaidAccommodation, id, booking },
@@ -76,7 +84,7 @@ export const columns: ColumnDef<Registration>[] = [
           </div>
         );
       }
-      return "N/A";
+      return <span className="text-[10px] text-muted-foreground">{"N/A"}</span>;
     },
   },
 ];

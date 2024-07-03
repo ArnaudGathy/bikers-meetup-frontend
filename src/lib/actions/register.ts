@@ -11,6 +11,7 @@ import { revalidatePath } from "next/cache";
 export const register = async (data: RegisterForm) => {
   const validation = registerSchema.safeParse({
     ...data,
+    name: `${data.firstName} ${data.lastName}`,
     tshirtsAmount: data.tshirtsAmount,
     emergencyPhone: `${data.emergencyPhonePrefix}${data.emergencyPhoneNumber}`,
     phone: `${data.phonePrefix}${data.phoneNumber}`,
