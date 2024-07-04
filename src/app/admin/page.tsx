@@ -1,26 +1,25 @@
-import { getAllRegistrations } from "@/lib/api/registrations";
-import { DataTable } from "@/app/admin/DataTable";
-import PaginationFooter from "@/app/admin/PaginationFooter";
-import SearchByName from "@/app/admin/SearchByName";
+import Registrations from "@/app/admin/Registrations";
+import { Suspense } from "react";
+import RegistrationSkeleton from "@/app/admin/RegistrationSkeleton";
 
-type AdminProps = {
-  searchParams?: {
-    currentPage?: string;
-    name?: string;
-  };
+export type RegistrationSearchParams = {
+  currentPage?: string;
+  name?: string;
+  isUnpaid?: string;
+};
+export type AdminSearchParamsProps = {
+  searchParams?: RegistrationSearchParams;
 };
 
-export default async function Admin({ searchParams }: AdminProps) {
-  const registrations = await getAllRegistrations({
-    currentPage: searchParams?.currentPage,
-    name: searchParams?.name,
-  });
-
+export default function Admin({ searchParams }: AdminSearchParamsProps) {
   return (
-    <div className="flex w-full flex-col items-center gap-4">
-      <SearchByName />
-      <DataTable data={registrations} />
-      <PaginationFooter total={registrations.total} />
-    </div>
+    <>
+      <Suspense
+        key={JSON.stringify(searchParams)}
+        fallback={<RegistrationSkeleton />}
+      >
+        <Registrations searchParams={searchParams} />
+      </Suspense>
+    </>
   );
 }

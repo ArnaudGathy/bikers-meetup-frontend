@@ -22,6 +22,7 @@ export default function Menu() {
                   alt="Logo of the Blue Knight® Belgium 8 chapter"
                   width="48"
                   height="48"
+                  priority
                 />
                 <div className="hidden flex-col items-center justify-center font-medium md:flex">
                   <p className="text-lg font-bold leading-4 text-primary">

@@ -19,24 +19,24 @@ export default function PaginationFooter({ total }: { total: number }) {
   const params = new URLSearchParams(searchParams);
   const paramsCurrentPage = params.get("currentPage") ?? "0";
 
-  const currentPage = Number(paramsCurrentPage);
   const numberOfPages = Math.ceil(total / PAGE_SIZE);
-
+  const currentPage = Number(paramsCurrentPage);
   const displayPage = currentPage + 1;
+  const updateParams = () => router.replace(`${pathName}?${params.toString()}`);
 
   const next = () => {
     params.set("currentPage", String(currentPage + 1));
-    router.replace(`${pathName}?${params.toString()}`);
+    updateParams();
   };
 
   const prev = () => {
     params.set("currentPage", String(currentPage - 1));
-    router.replace(`${pathName}?${params.toString()}`);
+    updateParams();
   };
 
   const setPage = (displayPage: number) => {
     params.set("currentPage", String(displayPage - 1));
-    router.replace(`${pathName}?${params.toString()}`);
+    updateParams();
   };
 
   return (
@@ -48,6 +48,11 @@ export default function PaginationFooter({ total }: { total: number }) {
           </PaginationItem>
         )}
         {currentPage > 2 && (
+          <PaginationItem onClick={() => setPage(0)}>
+            <PaginationLink>{1}</PaginationLink>
+          </PaginationItem>
+        )}
+        {currentPage > 3 && (
           <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>
@@ -75,9 +80,14 @@ export default function PaginationFooter({ total }: { total: number }) {
             <PaginationLink>{displayPage + 2}</PaginationLink>
           </PaginationItem>
         )}
-        {currentPage < numberOfPages - 3 && (
+        {currentPage < numberOfPages - 4 && (
           <PaginationItem>
             <PaginationEllipsis />
+          </PaginationItem>
+        )}
+        {currentPage < numberOfPages - 3 && (
+          <PaginationItem onClick={() => setPage(numberOfPages)}>
+            <PaginationLink>{numberOfPages}</PaginationLink>
           </PaginationItem>
         )}
         {currentPage < numberOfPages - 1 && (
