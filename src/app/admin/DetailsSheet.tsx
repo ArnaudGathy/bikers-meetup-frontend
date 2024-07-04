@@ -7,13 +7,15 @@ import {
 } from "@/components/ui/sheet";
 import { Registration } from "@prisma/client";
 import { ReactNode } from "react";
-import { format } from "date-fns";
+import { differenceInYears, format } from "date-fns";
 import CountryFlag from "@/components/CountryFlag";
 import {
+  BookingModes,
   bookingModeTranslation,
   travelModeTranslation,
   tShirtSizeTranslation,
 } from "@/lib/schemas/registerFormSchema";
+import { formatPrice, getTotal } from "@/lib/utils";
 
 const InformationRow = ({
   title,
@@ -23,7 +25,7 @@ const InformationRow = ({
   value: ReactNode;
 }) => (
   <div>
-    <div className="text-[16px] text-muted-foreground">{title}</div>
+    <div className="text-[16px] font-bold text-muted-foreground">{title}</div>
     <div className="text-black">{value}</div>
   </div>
 );
@@ -70,8 +72,22 @@ export default function DetailsSheet({
               <InformationRow title="Email" value={selectedRow.email} />
               <InformationRow title="Phone number" value={selectedRow.phone} />
               <InformationRow
+                title="Amount to pay"
+                value={formatPrice(getTotal(selectedRow.tshirtsAmount))}
+              />
+              <InformationRow
+                title="Has paid registration fee ?"
+                value={selectedRow.hasPaidRegistration ? "✅ Yes" : "❌ No"}
+              />
+              <InformationRow
                 title="Birthdate"
-                value={format(selectedRow.birthdate, "P")}
+                value={
+                  <>
+                    {format(selectedRow.birthdate, "P")} (
+                    {differenceInYears(new Date(), selectedRow.birthdate)} years
+                    old)
+                  </>
+                }
               />
               <InformationRow
                 title="Address"
@@ -126,32 +142,33 @@ export default function DetailsSheet({
               />
               <InformationRow
                 title="Accommodation"
+                value={bookingModeTranslation[selectedRow.booking]}
+              />
+              {selectedRow.booking === BookingModes.YES && (
+                <InformationRow
+                  title="Has paid accommodation ?"
+                  value={selectedRow.hasPaidAccommodation ? "✅ Yes" : "❌ No"}
+                />
+              )}
+
+              <InformationRow
+                title="Room sharing"
                 value={
                   <div>
-                    <div>{bookingModeTranslation[selectedRow.booking]}</div>
+                    {selectedRow.staysWith && (
+                      <div>Stays with {selectedRow.staysWith}</div>
+                    )}
                     <div>
                       {selectedRow.willShareRoom
                         ? "✅ Accepted to share room"
                         : "❌ Denied to share room"}
                     </div>
+                    {selectedRow.languages && (
+                      <div>Spoken languages : {selectedRow.languages}</div>
+                    )}
                   </div>
                 }
               />
-
-              {selectedRow.staysWith && (
-                <InformationRow
-                  title="Stays with"
-                  value={selectedRow.staysWith}
-                />
-              )}
-
-              {selectedRow.languages && (
-                <InformationRow
-                  title="Languages"
-                  value={selectedRow.languages}
-                />
-              )}
-
               {!!selectedRow.tshirtsAmount && selectedRow.tshirtsSize && (
                 <InformationRow
                   title="Tshirts"
@@ -163,7 +180,6 @@ export default function DetailsSheet({
                   }
                 />
               )}
-
               <InformationRow
                 title="Has aggreed to share pictures on Facebook ?"
                 value={selectedRow.hasAgreedToPicture ? "✅ Yes" : "❌ No"}
