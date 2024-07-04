@@ -7,6 +7,10 @@ import { registerSchema } from "@/lib/schemas/registerSchema";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import {
+  paymentReceived,
+  registrationCompleted,
+} from "@/lib/serverless/sendmail";
 
 export const register = async (data: RegisterForm) => {
   const validation = registerSchema.safeParse({
@@ -28,6 +32,13 @@ export const register = async (data: RegisterForm) => {
   }
 
   await prisma.registration.create({ data: validation.data });
+  await registrationCompleted({
+    targetMail: validation.data.email,
+    tshirtsAmount: validation.data.tshirtsAmount,
+    size: validation.data.tshirtsSize,
+    name: validation.data.name,
+  });
+
   revalidatePath("/admin");
 };
 
@@ -53,6 +64,18 @@ export const setAsPaid = async (id: number, field: string) => {
     where: { id: validation.data.id },
     data: { [validation.data.field]: true },
   });
+
+  if (validation.data.field === "hasPaidRegistration") {
+    const data = await prisma.registration.findUnique({
+      where: { id: validation.data.id },
+      select: { email: true },
+    });
+    if (!!data?.email) {
+      await paymentReceived({
+        targetMail: data.email,
+      });
+    }
+  }
 
   revalidatePath("/admin");
 };

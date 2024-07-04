@@ -110,12 +110,6 @@ export default function Register() {
     try {
       setIsLoading(true);
       await register(data);
-      await fetch(
-        `/api/mail?target=${data.email}&name=${data.firstName}&tshirtsAmount=${data.tshirtsAmount}&size=${data.tshirtsSize}`,
-        {
-          method: "POST",
-        },
-      );
       setIsRegistered(true);
     } catch (e) {
       console.error(e);

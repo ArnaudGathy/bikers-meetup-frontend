@@ -9,11 +9,34 @@ import {
 } from "@/lib/schemas/registerFormSchema";
 import { TransactionalEmailsApi, SendSmtpEmail } from "@getbrevo/brevo";
 
+const configEmail = ({
+  templateId,
+  targetMail,
+}: {
+  templateId: number;
+  targetMail: string;
+}) => {
+  if (!process.env.BREVO_API_KEY) {
+    throw new Error("API Key not found");
+  }
+
+  const apiInstance = new TransactionalEmailsApi();
+  apiInstance.setApiKey(0, process.env.BREVO_API_KEY);
+  const sendSmtpEmail = new SendSmtpEmail();
+  sendSmtpEmail.templateId = templateId;
+  sendSmtpEmail.to = [{ email: targetMail }];
+  sendSmtpEmail.replyTo = {
+    email: "international.convention.2025@gmail.com",
+    name: "Belgium VII Admin",
+  };
+  return { sendSmtpEmail, apiInstance };
+};
+
 type RegistrationCompletedParams = {
   targetMail: string;
   name: string;
-  tshirtsAmount: string;
-  size: TShirtsSizes | null;
+  tshirtsAmount: number | null;
+  size?: TShirtsSizes;
 };
 
 export const registrationCompleted = async ({
@@ -22,34 +45,47 @@ export const registrationCompleted = async ({
   tshirtsAmount,
   size,
 }: RegistrationCompletedParams) => {
-  if (!process.env.BREVO_API_KEY) {
-    return null;
-  }
+  const hasTshirts = tshirtsAmount !== null && tshirtsAmount > 0;
+  const TshirtsTotal = getTshirtsTotal(tshirtsAmount);
 
+  const { sendSmtpEmail, apiInstance } = configEmail({
+    templateId: 1,
+    targetMail,
+  });
+  sendSmtpEmail.params = {
+    name,
+    fee: formatPrice(REGISTRATION_FEE),
+    hasTshirts,
+    size: size ? tShirtSizeTranslation[size] : "",
+    tshirtsAmount,
+    tshirtsUnitPrice: formatPrice(T_SHIRT_UNIT_PRICE),
+    tshirtsTotal: formatPrice(TshirtsTotal),
+    total: formatPrice(getTotal(tshirtsAmount)),
+  };
+
+  await sendMail({ sendSmtpEmail, apiInstance });
+};
+
+export const paymentReceived = async ({
+  targetMail,
+}: {
+  targetMail: string;
+}) => {
+  const { sendSmtpEmail, apiInstance } = configEmail({
+    templateId: 2,
+    targetMail,
+  });
+  await sendMail({ sendSmtpEmail, apiInstance });
+};
+
+const sendMail = async ({
+  sendSmtpEmail,
+  apiInstance,
+}: {
+  sendSmtpEmail: SendSmtpEmail;
+  apiInstance: TransactionalEmailsApi;
+}) => {
   try {
-    const hasTshirts = tshirtsAmount !== "" && Number(tshirtsAmount) > 0;
-    const TshirtsTotal = getTshirtsTotal(tshirtsAmount);
-
-    const apiInstance = new TransactionalEmailsApi();
-    apiInstance.setApiKey(0, process.env.BREVO_API_KEY);
-    const sendSmtpEmail = new SendSmtpEmail();
-    sendSmtpEmail.templateId = 1;
-    sendSmtpEmail.to = [{ email: targetMail }];
-    sendSmtpEmail.replyTo = {
-      email: "international.convention.2025@gmail.com",
-      name: "Belgium VII Admin",
-    };
-    sendSmtpEmail.params = {
-      name,
-      fee: formatPrice(REGISTRATION_FEE),
-      hasTshirts,
-      size: size ? tShirtSizeTranslation[size] : "",
-      tshirtsAmount,
-      tshirtsUnitPrice: formatPrice(T_SHIRT_UNIT_PRICE),
-      tshirtsTotal: formatPrice(TshirtsTotal),
-      total: formatPrice(getTotal(tshirtsAmount)),
-    };
-
     await apiInstance.sendTransacEmail(sendSmtpEmail);
   } catch (e) {
     console.error("Error while sending mail", e);

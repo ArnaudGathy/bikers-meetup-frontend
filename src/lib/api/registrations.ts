@@ -2,7 +2,6 @@
 import "server-only";
 
 import prisma from "@/lib/prisma";
-import { unstable_noStore as noStore } from "next/cache";
 import { throwIfUnauthorized } from "@/lib/utils";
 import { PAGE_SIZE } from "@/constants/registrations";
 import { z } from "zod";
@@ -20,7 +19,6 @@ export const getAllRegistrations = async ({
   ...rest
 }: RegistrationSearchParams) => {
   await throwIfUnauthorized();
-  noStore();
 
   const validationWhere = whereSchema.safeParse(rest);
   if (!validationWhere.success) {
