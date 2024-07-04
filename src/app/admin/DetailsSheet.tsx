@@ -16,6 +16,7 @@ import {
   tShirtSizeTranslation,
 } from "@/lib/schemas/registerFormSchema";
 import { formatPrice, getTotal } from "@/lib/utils";
+import DeleteButton from "@/app/admin/DeleteButton";
 
 const InformationRow = ({
   title,
@@ -186,6 +187,10 @@ export default function DetailsSheet({
               />
             </div>
           </SheetDescription>
+          <DeleteButton
+            id={selectedRow.id}
+            resetSelectedRow={() => setSelectedRow(null)}
+          />
         </SheetHeader>
       </SheetContent>
     </Sheet>

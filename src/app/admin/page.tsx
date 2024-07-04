@@ -16,6 +16,9 @@ export type AdminSearchParamsProps = {
 export default function Admin({ searchParams }: AdminSearchParamsProps) {
   return (
     <>
+      <h1 className="mb-8 text-3xl font-bold tracking-tight">
+        Registration list
+      </h1>
       <Suspense
         key={JSON.stringify(searchParams)}
         fallback={<RegistrationSkeleton />}

@@ -79,3 +79,15 @@ export const setAsPaid = async (id: number, field: string) => {
 
   revalidatePath("/admin");
 };
+
+export const deleteRegistration = async (id: number) => {
+  const validation = z.number().safeParse(id);
+
+  if (!validation.success) {
+    console.error(validation.error);
+    throw new Error("Invalid id for delete");
+  }
+
+  await prisma.registration.delete({ where: { id: validation.data } });
+  revalidatePath("/admin");
+};
