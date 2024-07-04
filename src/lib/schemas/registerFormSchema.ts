@@ -30,7 +30,7 @@ export enum TShirtsSizes {
 
 export const bookingModeTranslation = {
   [BookingModes.YES]: "Yes",
-  [BookingModes.WITH_SOMEONE]: "Staying with someone else",
+  [BookingModes.WITH_SOMEONE]: "Is staying with someone else",
   [BookingModes.NO]: "No",
 };
 
