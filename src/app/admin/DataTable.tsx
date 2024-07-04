@@ -19,6 +19,8 @@ import { Registration } from "@prisma/client";
 import { columns } from "@/app/admin/Columns";
 import DetailsSheet from "@/app/admin/DetailsSheet";
 import { clsx } from "clsx";
+import { useSorting } from "@/hooks/useSorting";
+import { registrationSortingSchema } from "@/constants/registrations";
 
 export function DataTable({
   data,
@@ -29,13 +31,12 @@ export function DataTable({
     data: data.registrations,
     columns,
     getCoreRowModel: getCoreRowModel(),
-
-    // getPaginationRowModel: getPaginationRowModel(),
-    manualPagination: true,
-    pageCount: 1,
-    rowCount: 10,
   });
   const [selectedRow, setSelectedRow] = useState<Registration | null>(null);
+  const { getChevronIcon, handleRowFilterClick } = useSorting(
+    registrationSortingSchema,
+    (params) => params.set("currentPage", "0"),
+  );
 
   return (
     <>
@@ -52,13 +53,22 @@ export function DataTable({
                       className={clsx({
                         "text-center": header.column.columnDef.meta?.isCentered,
                       })}
+                      onClick={() => {
+                        if (!!header.column.columnDef.id) {
+                          handleRowFilterClick(header.column.columnDef.id);
+                        }
+                      }}
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
+                      {header.isPlaceholder ? null : (
+                        <div className="flex items-center gap-2">
+                          {flexRender(
                             header.column.columnDef.header,
                             header.getContext(),
                           )}
+                          {!!header.column.columnDef.id &&
+                            getChevronIcon(header.column.columnDef.id)}
+                        </div>
+                      )}
                     </TableHead>
                   );
                 })}
@@ -77,6 +87,11 @@ export function DataTable({
                       key={cell.id}
                       className={clsx({
                         "text-center": cell.column.columnDef.meta?.isCentered,
+                        capitalize:
+                          !!cell.column.columnDef.header &&
+                          ["name", "chapter"].includes(
+                            cell.column.columnDef.header.toString(),
+                          ),
                       })}
                       onClick={() => {
                         const { header } = cell.column.columnDef;

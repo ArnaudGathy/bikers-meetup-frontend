@@ -19,7 +19,7 @@ export const services = [
   },
 ];
 
-export const accommodationQuerySchema = z.object({
+export const accommodationSortingSchema = z.object({
   orderBy: z
     .union([
       z.literal("name"),
@@ -29,6 +29,10 @@ export const accommodationQuerySchema = z.object({
       z.literal("price2"),
       z.literal("ref"),
     ])
+    .nullable()
     .optional(),
-  method: z.union([z.literal("asc"), z.literal("desc")]).optional(),
+  method: z
+    .union([z.literal("asc"), z.literal("desc")])
+    .nullable()
+    .optional(),
 });

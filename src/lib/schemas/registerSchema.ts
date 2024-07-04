@@ -10,11 +10,13 @@ export const registerSchema = z
     name: z
       .string()
       .max(100, { message: "Name is too long." })
-      .min(1, { message: "Name is required." }),
+      .min(1, { message: "Name is required." })
+      .toLowerCase(),
     email: z
       .string()
       .email({ message: "Email is required." })
-      .max(256, { message: "Email is too long." }),
+      .max(256, { message: "Email is too long." })
+      .toLowerCase(),
     phone: z
       .string()
       .max(15, { message: "Invalid phone number" })
@@ -52,7 +54,8 @@ export const registerSchema = z
     chapter: z
       .string()
       .max(80, { message: "Chapter name is too long." })
-      .min(1, { message: "Chapter name is required." }),
+      .min(1, { message: "Chapter name is required." })
+      .toLowerCase(),
     chapterFunction: z
       .string()
       .max(80, { message: "Function is too long." })

@@ -6,6 +6,8 @@ export type RegistrationSearchParams = {
   currentPage?: string;
   name?: string;
   isUnpaid?: string;
+  orderBy?: string;
+  method?: "asc" | "desc";
 };
 export type AdminSearchParamsProps = {
   searchParams?: RegistrationSearchParams;

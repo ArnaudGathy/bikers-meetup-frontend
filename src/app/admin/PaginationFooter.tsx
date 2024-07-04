@@ -48,7 +48,7 @@ export default function PaginationFooter({ total }: { total: number }) {
           </PaginationItem>
         )}
         {currentPage > 2 && (
-          <PaginationItem onClick={() => setPage(0)}>
+          <PaginationItem onClick={() => setPage(1)}>
             <PaginationLink>{1}</PaginationLink>
           </PaginationItem>
         )}
