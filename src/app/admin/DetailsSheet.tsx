@@ -48,7 +48,7 @@ export default function DetailsSheet({
         }
       }}
     >
-      <SheetContent className="w-[600px]">
+      <SheetContent className="w-[450px]">
         <SheetHeader>
           <SheetTitle>
             <div className="flex gap-2">
@@ -103,7 +103,7 @@ export default function DetailsSheet({
                 value={
                   <div className="flex gap-1">
                     <CountryFlag country={selectedRow.country} />
-                    {selectedRow.chapter} {selectedRow.chapterFunction}
+                    {selectedRow.chapter} - {selectedRow.chapterFunction}
                   </div>
                 }
               />
