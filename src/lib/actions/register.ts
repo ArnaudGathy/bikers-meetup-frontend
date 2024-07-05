@@ -11,6 +11,7 @@ import {
   paymentReceived,
   registrationCompleted,
 } from "@/lib/serverless/sendmail";
+import { unparse } from "papaparse";
 
 export const register = async (data: RegisterForm) => {
   const validation = registerSchema.safeParse({
@@ -90,4 +91,9 @@ export const deleteRegistration = async (id: number) => {
 
   await prisma.registration.delete({ where: { id: validation.data } });
   revalidatePath("/admin");
+};
+
+export const getAllRegistration = async () => {
+  const data = await prisma.registration.findMany();
+  return unparse(data);
 };

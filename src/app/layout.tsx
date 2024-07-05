@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={`${GeistSans.className} overflow-y-scroll`}>
         <Menu />
         <main className="mx-auto max-w-[1200px] p-8">{children}</main>
-        <Toaster />
+        <Toaster duration={5000} position="top-left" />
       </body>
     </html>
   );

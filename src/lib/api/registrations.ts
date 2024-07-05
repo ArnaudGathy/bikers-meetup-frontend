@@ -12,6 +12,7 @@ import { redirect } from "next/navigation";
 import { BookingModes, Prisma } from "@prisma/client";
 import { RegistrationSearchParams } from "@/app/admin/page";
 import { unstable_noStore as noStore } from "next/cache";
+import { differenceInYears } from "date-fns";
 
 export type SchemaType = z.infer<typeof whereSchema>;
 
@@ -40,12 +41,15 @@ const whereSchema = z
   })
   .and(registrationSortingSchema);
 
-export const getAllRegistrations = async ({
+export const getRegistrations = async ({
   currentPage,
   ...rest
 }: RegistrationSearchParams) => {
   await throwIfUnauthorized();
   noStore();
+
+  // promise wait
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   const validationWhere = whereSchema.safeParse(rest);
   if (!validationWhere.success) {
@@ -119,4 +123,138 @@ export const getAllRegistrations = async ({
     registrations,
     total,
   };
+};
+
+export const getTotalRegistrationAndPaid = async () => {
+  await throwIfUnauthorized();
+  noStore();
+
+  const totalPromise = prisma.registration.count();
+  const totalPaidRegistrationsPromise = prisma.registration.count({
+    where: { hasPaidRegistration: true },
+  });
+  const [total, totalPaidRegistrations] = await Promise.all([
+    totalPromise,
+    totalPaidRegistrationsPromise,
+  ]);
+
+  return {
+    total,
+    percentagePaid: Math.round((totalPaidRegistrations / total) * 100),
+  };
+};
+
+export const getTotalAccommodationsAndPaid = async () => {
+  await throwIfUnauthorized();
+  noStore();
+
+  const totalPromise = prisma.registration.count({
+    where: { booking: { equals: BookingModes.YES } },
+  });
+  const totalPaidAccommodationsPromise = prisma.registration.count({
+    where: { hasPaidAccommodation: true },
+  });
+  const [total, totalPaidAccommodations] = await Promise.all([
+    totalPromise,
+    totalPaidAccommodationsPromise,
+  ]);
+
+  return {
+    total,
+    percentagePaid: Math.round((totalPaidAccommodations / total) * 100),
+  };
+};
+
+export const getTshirtsSold = async () => {
+  await throwIfUnauthorized();
+  noStore();
+
+  const tshirtsSold = await prisma.registration.aggregate({
+    _sum: { tshirtsAmount: true },
+    _avg: { tshirtsAmount: true },
+  });
+
+  return {
+    total: tshirtsSold._sum.tshirtsAmount ?? 0,
+    avg: tshirtsSold._avg.tshirtsAmount
+      ? Math.round(tshirtsSold._avg.tshirtsAmount)
+      : 0,
+  };
+};
+
+export const getAgeAverage = async () => {
+  await throwIfUnauthorized();
+  noStore();
+
+  const allBirthdate = await prisma.registration.findMany({
+    select: { birthdate: true },
+  });
+
+  const ages = allBirthdate.map((b) =>
+    differenceInYears(new Date(), b.birthdate),
+  );
+
+  const minAge = Math.min(...ages);
+  const maxAge = Math.max(...ages);
+
+  const ageSum = ages.reduce((acc, curr) => acc + curr, 0);
+  const ageAvg = Math.round(ageSum / ages.length);
+
+  return { ageAvg, minAge, maxAge };
+};
+
+export const getMostRepresentedCountry = async () => {
+  await throwIfUnauthorized();
+  noStore();
+
+  const countries = await prisma.registration.groupBy({
+    by: ["country"],
+    _count: {
+      country: true,
+    },
+  });
+
+  const differentCountries = countries.length;
+  countries.sort((a, b) => b._count.country - a._count.country);
+  countries.splice(3);
+
+  return {
+    countries: countries.map((c) => ({
+      country: c.country,
+      count: c._count.country,
+    })),
+    differentCountries,
+  };
+};
+
+// motorcycle brand
+export const getMostRepresentedBrand = async () => {
+  await throwIfUnauthorized();
+  noStore();
+
+  const brands = await prisma.registration.groupBy({
+    by: ["brand"],
+    _count: {
+      brand: true,
+    },
+    orderBy: {
+      _count: {
+        brand: "desc",
+      },
+    },
+  });
+
+  const models = await prisma.registration.groupBy({
+    by: ["model"],
+    _count: {
+      model: true,
+    },
+    orderBy: {
+      _count: {
+        model: "desc",
+      },
+    },
+  });
+
+  return { brand: brands[0].brand, model: models[0].model };
 };

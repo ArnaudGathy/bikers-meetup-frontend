@@ -26,9 +26,14 @@ const tableWidths = [
 export default function RegistrationSkeleton() {
   return (
     <div className="flex w-full flex-col items-center gap-4">
-      <div className="flex gap-4 self-start">
-        <Skeleton className="h-[40px] w-[200px]" />
-        <Skeleton className="h-[40px] w-[168px]" />
+      <div className="flex w-full justify-between gap-4 self-start">
+        <div className="flex gap-4">
+          <Skeleton className="h-[40px] w-[200px]" />
+          <Skeleton className="h-[40px] w-[168px]" />
+        </div>
+        <div>
+          <Skeleton className="h-[40px] w-[155px]" />
+        </div>
       </div>
       <div className="w-full rounded-md border">
         <Table>
