@@ -22,6 +22,9 @@ import {
   TravelModes,
 } from "@/lib/schemas/registerFormSchema";
 import { toast } from "sonner";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
+
+const maintenance = true;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const testValues = {
@@ -120,6 +123,20 @@ export default function Register() {
       setIsLoading(false);
     }
   };
+
+  if (maintenance) {
+    return (
+      <Alert>
+        <AlertTitle className="flex items-center gap-2">
+          <InformationCircleIcon className="size-6" />
+          Registration not available yet
+        </AlertTitle>
+        <AlertDescription className="flex flex-col gap-2">
+          Registration will open on July 23rd, please come back later.
+        </AlertDescription>
+      </Alert>
+    );
+  }
 
   return (
     <div>
