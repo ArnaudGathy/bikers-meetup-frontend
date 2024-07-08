@@ -20,7 +20,7 @@ import { formSchema } from "@/lib/schemas/registerFormSchema";
 import { toast } from "sonner";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
-const maintenance = true;
+const maintenance = false;
 
 const defaultValues = {
   firstName: "",
