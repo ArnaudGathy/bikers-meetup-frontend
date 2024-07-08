@@ -15,9 +15,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
+  SelectLabel,
 } from "@/components/ui/select";
 import { cn, formatPrice } from "@/lib/utils";
 import { T_SHIRT_UNIT_PRICE } from "@/constants/accommodations";
@@ -26,6 +29,8 @@ import {
   tShirtSizeTranslation,
   TShirtsSizes,
 } from "@/lib/schemas/registerFormSchema";
+import SizeChart from "@/components/SizeChart";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 const getModeText = (mode: BookingModes) => {
   switch (mode) {
@@ -37,6 +42,10 @@ const getModeText = (mode: BookingModes) => {
       return "I am staying with someone who is booking an accommodation";
   }
 };
+
+const sizes = Object.values(TShirtsSizes);
+const menSizes = sizes.slice(0, 8);
+const womenSizes = sizes.slice(8);
 
 export default function BookingForm({
   form,
@@ -179,22 +188,33 @@ export default function BookingForm({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {Object.values(TShirtsSizes).map((size) => (
-                      <SelectItem key={size} value={size}>
-                        {tShirtSizeTranslation[size]}
-                      </SelectItem>
-                    ))}
+                    <SelectGroup>
+                      <SelectLabel>{`Men's Sizes`}</SelectLabel>
+                      <SelectSeparator />
+                      {menSizes.map((size) => (
+                        <SelectItem key={size} value={size}>
+                          {tShirtSizeTranslation[size]}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                    <SelectGroup>
+                      <SelectLabel>{`Women's Sizes`}</SelectLabel>
+                      <SelectSeparator />
+                      {womenSizes.map((size) => (
+                        <SelectItem key={size} value={size}>
+                          {tShirtSizeTranslation[size]}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <FormDescription>
-                  <a
-                    className="text-primary underline-offset-4 hover:underline"
-                    href="/size-chart.jpeg"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    See size chart
-                  </a>
+                  <Dialog>
+                    <DialogTrigger className="cursor-pointer text-primary hover:underline">
+                      See size chart
+                    </DialogTrigger>
+                    <SizeChart />
+                  </Dialog>
                 </FormDescription>
                 <FormMessage />
               </FormItem>

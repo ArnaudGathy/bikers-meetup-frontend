@@ -109,4 +109,9 @@ enum TShirtsSizes {
   ThreeXL
   FourXL
   FiveXL
+  WomenS
+  WomenM
+  WomenL
+  WomenXL
+  WomenTwoXL
 }

@@ -17,8 +17,13 @@ const CountryLine = ({
   countries: { count: number; country: string }[];
   index: number;
 }) => {
-  const entry = countries[index];
-  const foundCountry = countryList.find(({ code }) => code === entry.country);
+  const entry = countries.length > index ? countries[index] : undefined;
+
+  if (!entry) {
+    return null;
+  }
+
+  const foundCountry = countryList.find(({ code }) => code === entry?.country);
 
   return (
     <div

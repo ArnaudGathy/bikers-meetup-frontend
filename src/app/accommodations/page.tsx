@@ -5,6 +5,8 @@ import AccommodationsList, {
   AccommodationsListSkeleton,
 } from "@/app/accommodations/AccommodationsList";
 import { Suspense } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 type AccommodationsProps = {
   searchParams?: {
@@ -143,9 +145,30 @@ export default function Accommodations({ searchParams }: AccommodationsProps) {
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <PlaneIcon className="h-6 w-6 text-primary" />
-                <h3 className="text-lg font-semibold">Pre-Tour</h3>
+                <h3 className="text-lg font-semibold">Post Tour</h3>
               </div>
-              <p className="ml-8">Informations will be available later.</p>
+              <p className="ml-8">
+                You asked for it, David Buckey and Celtic horizon tour prepared
+                it for you. Any questions about this tour should be addressed to
+                David. Belgium VIII does not handle this activity.
+              </p>
+              <div className="ml-4">
+                <Link
+                  href="post_tour_itenerary.pdf"
+                  target="_blank"
+                  prefetch={false}
+                >
+                  <Button variant="link">More information</Button>
+                </Link>
+                <Link
+                  href="https://www.celtichorizontours.com/packages/post-convention-7-night-coach-tour/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  prefetch={false}
+                >
+                  <Button variant="link">Book tour</Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

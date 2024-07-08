@@ -83,12 +83,13 @@ TableHead.displayName = "TableHead";
 
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
-  React.TdHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => (
+  React.TdHTMLAttributes<HTMLTableCellElement> & { small?: boolean }
+>(({ className, small, ...props }, ref) => (
   <td
     ref={ref}
     className={cn(
       "p-4 text-left align-middle [&:has([role=checkbox])]:pr-0",
+      { "px-4 py-1": small },
       className,
     )}
     {...props}

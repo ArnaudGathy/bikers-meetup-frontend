@@ -26,6 +26,11 @@ export enum TShirtsSizes {
   "3XL" = "ThreeXL",
   "4XL" = "FourXL",
   "5XL" = "FiveXL",
+  "WS" = "WomenS",
+  "WM" = "WomenM",
+  "WL" = "WomenL",
+  "WXL" = "WomenXL",
+  "W2XL" = "WomenTwoXL",
 }
 
 export const bookingModeTranslation = {
@@ -52,6 +57,11 @@ export const tShirtSizeTranslation = {
   [TShirtsSizes["3XL"]]: "3XL",
   [TShirtsSizes["4XL"]]: "4XL",
   [TShirtsSizes["5XL"]]: "5XL",
+  [TShirtsSizes["WS"]]: "S",
+  [TShirtsSizes["WM"]]: "M",
+  [TShirtsSizes["WL"]]: "L",
+  [TShirtsSizes["WXL"]]: "XL",
+  [TShirtsSizes["W2XL"]]: "2XL",
 };
 
 export const formSchema = z

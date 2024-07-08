@@ -16,51 +16,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import {
-  BookingModes,
-  formSchema,
-  TravelModes,
-} from "@/lib/schemas/registerFormSchema";
+import { formSchema } from "@/lib/schemas/registerFormSchema";
 import { toast } from "sonner";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
 const maintenance = true;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const testValues = {
-  firstName: "aa",
-  lastName: "aa",
-  email: "arno.firefox@gmail.com",
-  phonePrefix: "+32",
-  phoneNumber: "4589621",
-  day: "01",
-  month: "01",
-  year: "1991",
-  emergencyName: "test",
-  emergencyPhonePrefix: "+32",
-  emergencyPhoneNumber: "4896326",
-  street: "a",
-  number: "a",
-  box: "a",
-  country: "BE",
-  city: "a",
-  zip: "a",
-  chapter: "a",
-  chapterFunction: "a",
-  travelMode: TravelModes.CAR,
-  brand: "",
-  model: "",
-  licencePlate: "",
-  booking: BookingModes.YES,
-  willShareRoom: false,
-  staysWith: "aaa",
-  languages: "z, f, d",
-  tshirtsAmount: "",
-  tshirtsSize: undefined,
-  hasAgreedToPay: true,
-  hasAgreedToData: true,
-  hasAgreedToPicture: false,
-};
 
 const defaultValues = {
   firstName: "",
@@ -73,7 +33,7 @@ const defaultValues = {
   year: "",
   emergencyName: "",
   emergencyPhonePrefix: "",
-  emergencyPhone: "",
+  emergencyPhoneNumber: "",
   street: "",
   number: "",
   box: "",

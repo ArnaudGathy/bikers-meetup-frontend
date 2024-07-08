@@ -140,7 +140,7 @@ export const getTotalRegistrationAndPaid = async () => {
 
   return {
     total,
-    percentagePaid: Math.round((totalPaidRegistrations / total) * 100),
+    percentagePaid: Math.round((totalPaidRegistrations / (total || 1)) * 100),
   };
 };
 
@@ -161,7 +161,7 @@ export const getTotalAccommodationsAndPaid = async () => {
 
   return {
     total,
-    percentagePaid: Math.round((totalPaidAccommodations / total) * 100),
+    percentagePaid: Math.round((totalPaidAccommodations / (total || 1)) * 100),
   };
 };
 
@@ -193,6 +193,10 @@ export const getAgeAverage = async () => {
   const ages = allBirthdate.map((b) =>
     differenceInYears(new Date(), b.birthdate),
   );
+
+  if (ages.length === 0) {
+    return { ageAvg: 0, minAge: 0, maxAge: 0 };
+  }
 
   const minAge = Math.min(...ages);
   const maxAge = Math.max(...ages);
@@ -256,5 +260,8 @@ export const getMostRepresentedBrand = async () => {
     },
   });
 
-  return { brand: brands[0].brand, model: models[0].model };
+  return {
+    brand: brands?.[0]?.brand || "No data yet",
+    model: models?.[0]?.model || "No data yet",
+  };
 };
