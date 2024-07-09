@@ -32,12 +32,15 @@ export const register = async (data: RegisterForm) => {
     throw new Error("Invalid data");
   }
 
-  await prisma.registration.create({ data: validation.data });
+  const registration = await prisma.registration.create({
+    data: validation.data,
+  });
   await registrationCompleted({
     targetMail: validation.data.email,
     tshirtsAmount: validation.data.tshirtsAmount,
     size: validation.data.tshirtsSize,
     name: validation.data.name,
+    id: registration.id,
   });
 
   revalidatePath("/admin");

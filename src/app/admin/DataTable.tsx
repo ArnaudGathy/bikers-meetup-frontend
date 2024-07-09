@@ -50,9 +50,6 @@ export function DataTable({
                   return (
                     <TableHead
                       key={header.id}
-                      className={clsx({
-                        "text-center": header.column.columnDef.meta?.isCentered,
-                      })}
                       onClick={() => {
                         if (!!header.column.columnDef.id) {
                           handleRowFilterClick(header.column.columnDef.id);
@@ -60,7 +57,12 @@ export function DataTable({
                       }}
                     >
                       {header.isPlaceholder ? null : (
-                        <div className="flex items-center gap-2">
+                        <div
+                          className={clsx("flex items-center gap-2", {
+                            "justify-center":
+                              header.column.columnDef.meta?.isCentered,
+                          })}
+                        >
                           {flexRender(
                             header.column.columnDef.header,
                             header.getContext(),
@@ -90,7 +92,9 @@ export function DataTable({
                         capitalize:
                           !!cell.column.columnDef.header &&
                           ["name", "chapter"].includes(
-                            cell.column.columnDef.header.toString(),
+                            cell.column.columnDef.header
+                              .toString()
+                              .toLowerCase(),
                           ),
                       })}
                       onClick={() => {

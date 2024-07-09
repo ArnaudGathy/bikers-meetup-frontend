@@ -37,6 +37,7 @@ type RegistrationCompletedParams = {
   name: string;
   tshirtsAmount: number | null;
   size?: TShirtsSizes;
+  id: number;
 };
 
 export const registrationCompleted = async ({
@@ -44,6 +45,7 @@ export const registrationCompleted = async ({
   name,
   tshirtsAmount,
   size,
+  id,
 }: RegistrationCompletedParams) => {
   const hasTshirts = tshirtsAmount !== null && tshirtsAmount > 0;
   const TshirtsTotal = getTshirtsTotal(tshirtsAmount);
@@ -54,6 +56,7 @@ export const registrationCompleted = async ({
   });
   sendSmtpEmail.params = {
     name,
+    id,
     fee: formatPrice(REGISTRATION_FEE),
     hasTshirts,
     size: size ? tShirtSizeTranslation[size] : "",
