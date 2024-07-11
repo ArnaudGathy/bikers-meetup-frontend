@@ -9,7 +9,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { tShirtSizeCount } from "@/app/admin/(card)/TshirtsSizes";
+import { tShirtSizeCount } from "@/lib/api/registrations";
 
 export default function TShirtsSizesPieChart({
   title,

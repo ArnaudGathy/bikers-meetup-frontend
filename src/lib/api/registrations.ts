@@ -9,10 +9,20 @@ import {
 } from "@/constants/registrations";
 import { z } from "zod";
 import { redirect } from "next/navigation";
-import { BookingModes, Prisma } from "@prisma/client";
+import { BookingModes, Prisma, TShirtsSizes } from "@prisma/client";
 import { RegistrationSearchParams } from "@/app/admin/page";
 import { unstable_noStore as noStore } from "next/cache";
 import { differenceInYears } from "date-fns";
+import { TShirtsSizes as SizeEnum } from "@/lib/schemas/registerFormSchema";
+import {
+  entries,
+  filter,
+  firstBy,
+  groupBy,
+  mapValues,
+  pipe,
+  sum,
+} from "remeda";
 
 export type SchemaType = z.infer<typeof whereSchema>;
 
@@ -180,6 +190,11 @@ export const getTshirtsSold = async () => {
   };
 };
 
+export type tShirtSizeCount = {
+  size: TShirtsSizes | null;
+  count: number;
+}[];
+
 export const getTshirtsSizes = async () => {
   await throwIfUnauthorized();
   noStore();
@@ -193,10 +208,50 @@ export const getTshirtsSizes = async () => {
       tshirtsSize: { not: null },
     },
   });
-  return result.map((result) => ({
-    size: result.tshirtsSize,
-    count: result._count.tshirtsSize,
-  }));
+
+  return result.reduce(
+    (acc: { men: tShirtSizeCount; women: tShirtSizeCount }, curr) => {
+      if (!!curr.tshirtsSize) {
+        const currentValue = {
+          size: curr.tshirtsSize,
+          count: curr._count.tshirtsSize,
+        };
+
+        if (
+          [
+            SizeEnum.S,
+            SizeEnum.M,
+            SizeEnum.L,
+            SizeEnum.XL,
+            SizeEnum["2XL"],
+            SizeEnum["3XL"],
+            SizeEnum["4XL"],
+            SizeEnum["5XL"],
+          ].includes(curr.tshirtsSize as SizeEnum)
+        ) {
+          return {
+            ...acc,
+            men: [...acc.men, currentValue],
+          };
+        }
+
+        if (
+          [
+            SizeEnum.WS,
+            SizeEnum.WM,
+            SizeEnum.WL,
+            SizeEnum.WXL,
+            SizeEnum["W2XL"],
+          ].includes(curr.tshirtsSize as SizeEnum)
+        ) {
+          return { ...acc, women: [...acc.women, currentValue] };
+        }
+      }
+
+      return acc;
+    },
+    { men: [], women: [] },
+  );
 };
 
 export const getAgeAverage = async () => {
@@ -277,8 +332,40 @@ export const getMostRepresentedBrand = async () => {
     },
   });
 
+  const mostPopularModel = pipe(
+    models,
+    filter((model) => !!model.model),
+    groupBy((model) => model?.model?.trim().toLowerCase().replaceAll(" ", "")),
+    mapValues((values) => ({
+      count: sum(
+        values.map((val) => {
+          return val._count.model;
+        }),
+      ),
+      name: values[0].model,
+    })),
+    entries(),
+    firstBy([([, { count }]) => count, "desc"]),
+  );
+
+  const mostPopularBrand = pipe(
+    brands,
+    filter((brand) => !!brand.brand),
+    groupBy((brand) => brand?.brand?.trim().toLowerCase().replaceAll(" ", "")),
+    mapValues((values) => ({
+      count: sum(
+        values.map((val) => {
+          return val._count.brand;
+        }),
+      ),
+      name: values[0].brand,
+    })),
+    entries(),
+    firstBy([([, { count }]) => count, "desc"]),
+  );
+
   return {
-    brand: brands?.[0]?.brand || "No data yet",
-    model: models?.[0]?.model || "No data yet",
+    brand: mostPopularBrand?.[1].name || "No data yet",
+    model: mostPopularModel?.[1].name || "No data yet",
   };
 };
