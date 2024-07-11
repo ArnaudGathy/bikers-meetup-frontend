@@ -88,11 +88,9 @@ export const getRegistrations = async ({
       },
     ],
   };
-  const aggregation = await prisma.registration.aggregate({
-    _count: { id: true },
+  const total = await prisma.registration.count({
     where: whereClause,
   });
-  const total = aggregation._count.id;
   const maxPage = Math.max(Math.ceil(total / PAGE_SIZE) - 1, 0);
 
   const validationPagination = z.coerce

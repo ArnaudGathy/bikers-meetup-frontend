@@ -51,7 +51,7 @@ export default function DetailsSheet({
         }
       }}
     >
-      <SheetContent className="w-[450px]">
+      <SheetContent className="w-[450px] overflow-scroll">
         <SheetHeader>
           <SheetTitle>
             <div className="flex gap-2">

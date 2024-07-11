@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
-import { getAllRegistration } from "@/lib/actions/register";
+import { getAllRegistrationAsCSV } from "@/lib/actions/register";
 import { useFormStatus } from "react-dom";
 import Loader from "@/components/Loader";
 import { formatISO } from "date-fns";
@@ -21,7 +21,7 @@ const DownloadButton = () => {
 export default function ExportAsCSVButton() {
   const handleAction = async () => {
     try {
-      const registrationCSV = await getAllRegistration();
+      const registrationCSV = await getAllRegistrationAsCSV();
 
       const blob = new Blob([registrationCSV], {
         type: "text/csv;charset=utf-8",

@@ -96,7 +96,7 @@ export const deleteRegistration = async (id: number) => {
   revalidatePath("/admin");
 };
 
-export const getAllRegistration = async () => {
+export const getAllRegistrationAsCSV = async () => {
   const data = await prisma.registration.findMany();
   return unparse(data);
 };
