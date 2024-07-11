@@ -35,3 +35,19 @@ export const LowerCardSkeleton = ({ lines }: { lines: number }) => {
     </Card>
   );
 };
+
+export const BigCardSkeleton = () => {
+  return (
+    <Card className="col-span-4 flex-1 space-y-8">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-4xl">
+          <Skeleton className="h-[24px] w-[275px]" />
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex h-[357px] gap-8">
+        <Skeleton className="h-full w-full" />
+        <Skeleton className="h-full w-full" />
+      </CardContent>
+    </Card>
+  );
+};

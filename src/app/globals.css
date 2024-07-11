@@ -31,6 +31,21 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 209.1 70.1% 62%;
     --radius: 0.5rem;
+
+    --chart-1: #bae6fd;
+    --chart-2: #7dd3fc;
+    --chart-3: #38bdf8;
+    --chart-4: #0ea5e9;
+    --chart-5: #0284c7;
+    --chart-6: #0369a1;
+    --chart-7: #075985;
+    --chart-8: #0c4a6e;
+
+    --chart-w-1: #fbcfe8;
+    --chart-w-2: #f9a8d4;
+    --chart-w-3: #f472b6;
+    --chart-w-4: #ec4899;
+    --chart-w-5: #db2777;
   }
 
   /*.dark {*/

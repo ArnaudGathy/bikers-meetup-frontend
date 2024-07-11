@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { getTshirtsSold } from "@/lib/api/registrations";
 
-export default async function Tshirts() {
+export default async function TshirtsCount() {
   const { total, avg } = await getTshirtsSold();
 
   return (

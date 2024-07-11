@@ -1,11 +1,13 @@
 import { Suspense } from "react";
 import Total from "@/app/admin/(card)/Total";
 import Accommodations from "@/app/admin/(card)/Accommodations";
-import Tshirts from "@/app/admin/(card)/Tshirts";
+import TshirtsCount from "@/app/admin/(card)/TshirtsCount";
 import Age from "@/app/admin/(card)/Age";
 import Countries from "@/app/admin/(card)/Countries";
 import Motorcycle from "@/app/admin/(card)/Motorcycle";
+import TshirtsSizes from "@/app/admin/(card)/TshirtsSizes";
 import {
+  BigCardSkeleton,
   LowerCardSkeleton,
   UpperCardSkeleton,
 } from "@/app/admin/(card)/CardSkeleton";
@@ -19,9 +21,6 @@ export default function Stats() {
       <Suspense fallback={<UpperCardSkeleton />}>
         <Accommodations />
       </Suspense>
-      <Suspense fallback={<LowerCardSkeleton lines={1} />}>
-        <Tshirts />
-      </Suspense>
       <Suspense fallback={<LowerCardSkeleton lines={2} />}>
         <Age />
       </Suspense>
@@ -30,6 +29,12 @@ export default function Stats() {
       </Suspense>
       <Suspense fallback={<LowerCardSkeleton lines={1} />}>
         <Motorcycle />
+      </Suspense>
+      <Suspense fallback={<LowerCardSkeleton lines={1} />}>
+        <TshirtsCount />
+      </Suspense>
+      <Suspense fallback={<BigCardSkeleton />}>
+        <TshirtsSizes />
       </Suspense>
     </div>
   );

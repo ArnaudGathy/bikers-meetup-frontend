@@ -180,6 +180,25 @@ export const getTshirtsSold = async () => {
   };
 };
 
+export const getTshirtsSizes = async () => {
+  await throwIfUnauthorized();
+  noStore();
+
+  const result = await prisma.registration.groupBy({
+    by: ["tshirtsSize"],
+    _count: {
+      tshirtsSize: true,
+    },
+    where: {
+      tshirtsSize: { not: null },
+    },
+  });
+  return result.map((result) => ({
+    size: result.tshirtsSize,
+    count: result._count.tshirtsSize,
+  }));
+};
+
 export const getAgeAverage = async () => {
   await throwIfUnauthorized();
   noStore();
