@@ -12,6 +12,7 @@ import {
   registrationCompleted,
 } from "@/lib/serverless/sendmail";
 import { unparse } from "papaparse";
+import { BookingModes } from "@/lib/schemas/registerFormSchema";
 
 export const register = async (data: RegisterForm) => {
   const validation = registerSchema.safeParse({
@@ -72,11 +73,12 @@ export const setAsPaid = async (id: number, field: string) => {
   if (validation.data.field === "hasPaidRegistration") {
     const data = await prisma.registration.findUnique({
       where: { id: validation.data.id },
-      select: { email: true },
+      select: { email: true, booking: true },
     });
     if (!!data?.email) {
       await paymentReceived({
         targetMail: data.email,
+        isBooking: data.booking === BookingModes.YES,
       });
     }
   }

@@ -71,11 +71,13 @@ export const registrationCompleted = async ({
 
 export const paymentReceived = async ({
   targetMail,
+  isBooking,
 }: {
   targetMail: string;
+  isBooking: boolean;
 }) => {
   const { sendSmtpEmail, apiInstance } = configEmail({
-    templateId: 2,
+    templateId: isBooking ? 2 : 3,
     targetMail,
   });
   await sendMail({ sendSmtpEmail, apiInstance });
