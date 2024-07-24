@@ -1,10 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { services } from "@/constants/accommodations";
 import { formatPrice } from "@/lib/utils";
-import AccommodationsList, {
-  AccommodationsListSkeleton,
-} from "@/app/accommodations/AccommodationsList";
-import { Suspense } from "react";
+import AccommodationsList from "@/app/accommodations/AccommodationsList";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -34,9 +31,7 @@ export default function Accommodations({ searchParams }: AccommodationsProps) {
             </p>
           </div>
           <div className="overflow-x-auto">
-            <Suspense fallback={<AccommodationsListSkeleton />}>
-              <AccommodationsList searchParams={searchParams} />
-            </Suspense>
+            <AccommodationsList searchParams={searchParams} />
             <div className="mt-4 text-sm text-muted-foreground">
               {`* There is a tourist tax of ${formatPrice(212)} per night.`}
             </div>
