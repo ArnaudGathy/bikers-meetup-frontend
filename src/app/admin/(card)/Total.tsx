@@ -20,7 +20,7 @@ export default async function Total() {
       <CardContent className="space-y-1">
         <div className="text-xs text-muted-foreground">
           <span className="text-primary">{percentagePaid}%</span> of
-          registration are paid
+          registrations are paid
         </div>
         <Progress value={percentagePaid} max={100} />
       </CardContent>

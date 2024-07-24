@@ -22,7 +22,7 @@ export default async function Age() {
           years old
         </div>
         <div className="text-xs text-muted-foreground">
-          The eldest person is <span className="text-primary">{maxAge}</span>{" "}
+          The oldest person is <span className="text-primary">{maxAge}</span>{" "}
           years old
         </div>
       </CardContent>
