@@ -6,10 +6,8 @@ import {
   ChevronUpDownIcon,
   ChevronUpIcon,
 } from "@heroicons/react/16/solid";
-import { ZodSchema } from "zod";
 
 export const useSorting = (
-  schema: ZodSchema,
   filterCallback?: (params: URLSearchParams) => void,
 ) => {
   const searchParams = useSearchParams();

@@ -20,7 +20,6 @@ import { columns } from "@/app/admin/Columns";
 import DetailsSheet from "@/app/admin/DetailsSheet";
 import { clsx } from "clsx";
 import { useSorting } from "@/hooks/useSorting";
-import { registrationSortingSchema } from "@/constants/registrations";
 
 export function DataTable({
   data,
@@ -33,9 +32,8 @@ export function DataTable({
     getCoreRowModel: getCoreRowModel(),
   });
   const [selectedRow, setSelectedRow] = useState<Registration | null>(null);
-  const { getChevronIcon, handleRowFilterClick } = useSorting(
-    registrationSortingSchema,
-    (params) => params.set("currentPage", "0"),
+  const { getChevronIcon, handleRowFilterClick } = useSorting((params) =>
+    params.set("currentPage", "0"),
   );
 
   return (

@@ -1,6 +1,6 @@
 "use client";
+
 import { useSorting } from "@/hooks/useSorting";
-import { accommodationSortingSchema } from "@/constants/accommodations";
 
 const tableHeaders = [
   { name: "Accommodation Type", width: "250px", fieldName: "name" },
@@ -12,9 +12,7 @@ const tableHeaders = [
 ];
 
 export default function AccommodationsTableHeaders() {
-  const { getChevronIcon, handleRowFilterClick } = useSorting(
-    accommodationSortingSchema,
-  );
+  const { getChevronIcon, handleRowFilterClick } = useSorting();
 
   return (
     <thead className="bg-secondary">
