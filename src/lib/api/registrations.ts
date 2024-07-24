@@ -11,7 +11,6 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { BookingModes, Prisma, TShirtsSizes } from "@prisma/client";
 import { RegistrationSearchParams } from "@/app/admin/page";
-import { unstable_noStore as noStore } from "next/cache";
 import { differenceInYears } from "date-fns";
 import { TShirtsSizes as SizeEnum } from "@/lib/schemas/registerFormSchema";
 import {
@@ -56,10 +55,6 @@ export const getRegistrations = async ({
   ...rest
 }: RegistrationSearchParams) => {
   await throwIfUnauthorized();
-  noStore();
-
-  // promise wait
-  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   const validationWhere = whereSchema.safeParse(rest);
   if (!validationWhere.success) {
@@ -135,7 +130,6 @@ export const getRegistrations = async ({
 
 export const getTotalRegistrationAndPaid = async () => {
   await throwIfUnauthorized();
-  noStore();
 
   const totalPromise = prisma.registration.count();
   const totalPaidRegistrationsPromise = prisma.registration.count({
@@ -154,7 +148,6 @@ export const getTotalRegistrationAndPaid = async () => {
 
 export const getTotalAccommodationsAndPaid = async () => {
   await throwIfUnauthorized();
-  noStore();
 
   const totalPromise = prisma.registration.count({
     where: { booking: { equals: BookingModes.YES } },
@@ -175,7 +168,6 @@ export const getTotalAccommodationsAndPaid = async () => {
 
 export const getTshirtsSold = async () => {
   await throwIfUnauthorized();
-  noStore();
 
   const tshirtsSold = await prisma.registration.aggregate({
     _sum: { tshirtsAmount: true },
@@ -197,7 +189,6 @@ export type tShirtSizeCount = {
 
 export const getTshirtsSizes = async () => {
   await throwIfUnauthorized();
-  noStore();
 
   const result = await prisma.registration.groupBy({
     by: ["tshirtsSize"],
@@ -256,7 +247,6 @@ export const getTshirtsSizes = async () => {
 
 export const getAgeAverage = async () => {
   await throwIfUnauthorized();
-  noStore();
 
   const allBirthdate = await prisma.registration.findMany({
     select: { birthdate: true },
@@ -281,7 +271,6 @@ export const getAgeAverage = async () => {
 
 export const getMostRepresentedCountry = async () => {
   await throwIfUnauthorized();
-  noStore();
 
   const countries = await prisma.registration.groupBy({
     by: ["country"],
@@ -306,7 +295,6 @@ export const getMostRepresentedCountry = async () => {
 // motorcycle brand
 export const getMostRepresentedBrand = async () => {
   await throwIfUnauthorized();
-  noStore();
 
   const brands = await prisma.registration.groupBy({
     by: ["brand"],

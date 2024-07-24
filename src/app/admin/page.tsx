@@ -1,7 +1,6 @@
 import Registrations from "@/app/admin/Registrations";
 import { Suspense } from "react";
 import RegistrationSkeleton from "@/app/admin/RegistrationSkeleton";
-import Stats from "@/app/admin/Stats";
 
 export type RegistrationSearchParams = {
   currentPage?: string;
@@ -24,8 +23,6 @@ export default function Admin({ searchParams }: AdminSearchParamsProps) {
       >
         <Registrations searchParams={searchParams} />
       </Suspense>
-      <h1 className="text-3xl font-bold tracking-tight">Statistics</h1>
-      <Stats />
     </div>
   );
 }
