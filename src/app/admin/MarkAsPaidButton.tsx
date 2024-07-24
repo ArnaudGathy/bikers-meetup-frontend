@@ -33,7 +33,7 @@ export default function MarkAsPaidButton({
           // eslint-disable-next-line
           console.info(
             "Set as paid button clicked from ",
-            window.navigator.userAgent,
+            JSON.stringify(2, null, window.navigator.userAgent),
           );
           await setPaid();
         }}
