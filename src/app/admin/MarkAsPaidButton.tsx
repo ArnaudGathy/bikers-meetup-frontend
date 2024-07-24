@@ -28,7 +28,16 @@ export default function MarkAsPaidButton({
   const setPaid = setAsPaid.bind(null, id, field);
   return (
     <div>
-      <form action={setPaid}>
+      <form
+        action={async () => {
+          // eslint-disable-next-line
+          console.info(
+            "Set as paid button clicked from ",
+            window.navigator.userAgent,
+          );
+          await setPaid();
+        }}
+      >
         <ButtonWithLoader />
       </form>
     </div>
