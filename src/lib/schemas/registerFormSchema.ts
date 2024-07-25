@@ -165,7 +165,10 @@ export const formSchema = z
       .string()
       .max(80, { message: "Chapter name is too long." })
       .min(1, { message: "Chapter name is required." }),
-    chapterFunction: z.string().max(80, { message: "Function is too long." }),
+    chapterFunction: z
+      .string()
+      .max(80, { message: "Function is too long." })
+      .min(1, { message: "Chapter function is required." }),
     brand: z.string().max(50, { message: "Motorcycle brand is too long." }),
     model: z.string().max(50, { message: "Motorcycle model is too long." }),
     licencePlate: z.string().max(50, { message: "Licence plate is too long." }),
