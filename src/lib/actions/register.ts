@@ -48,11 +48,6 @@ export const register = async (data: RegisterForm) => {
 };
 
 export const setAsPaid = async (id: number, field: string) => {
-  // eslint-disable-next-line
-  console.info(
-    "Set as paid function called from",
-    JSON.stringify(2, null, window.navigator.userAgent),
-  );
   await throwIfUnauthorized();
 
   const validation = z
