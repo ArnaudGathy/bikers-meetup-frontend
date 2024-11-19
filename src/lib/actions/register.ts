@@ -99,6 +99,6 @@ export const deleteRegistration = async (id: number) => {
 };
 
 export const getAllRegistrationAsCSV = async () => {
-  const data = await prisma.registration.findMany();
+  const data = await prisma.registration.findMany({ orderBy: { id: "asc" } });
   return unparse(data);
 };

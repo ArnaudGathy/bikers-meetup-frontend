@@ -25,9 +25,18 @@ export default function Accommodations({ searchParams }: AccommodationsProps) {
               Find the perfect accommodation for your stay at our upcoming
               event.
             </p>
-            <p className="mt-4 text-gray-500">
-              You will receive a link for the accommodation booking after your
-              registration.
+            <p className="mt-4 flex items-center text-gray-500">
+              You can check the payment of the accommodation via
+              <Link
+                href="https://www.centerparcs.eu/my/in-en/simplebooking/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                prefetch={false}
+              >
+                <Button variant="link" size="sm">
+                  Centerparcs
+                </Button>
+              </Link>
             </p>
           </div>
           <div className="overflow-x-auto">

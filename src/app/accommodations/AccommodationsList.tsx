@@ -5,6 +5,8 @@ import AccommodationsTableHeaders from "@/app/accommodations/AccommodationsTable
 import { Suspense } from "react";
 import { accommodationSortingSchema } from "@/constants/accommodations";
 import { isNumber, isString } from "remeda";
+import styles from "./AccommodationsList.module.css";
+import { clsx } from "clsx";
 
 type AccommodationType = {
   id: number;
@@ -15,6 +17,7 @@ type AccommodationType = {
   available: number;
   price1: number;
   price2: number;
+  isSoldOut?: boolean;
 };
 
 const accommodationsList: AccommodationType[] = [
@@ -77,6 +80,7 @@ const accommodationsList: AccommodationType[] = [
     available: 11,
     price1: 51688,
     price2: 62026,
+    isSoldOut: true,
   },
   {
     id: 7,
@@ -87,6 +91,7 @@ const accommodationsList: AccommodationType[] = [
     available: 12,
     price1: 71048,
     price2: 85258,
+    isSoldOut: true,
   },
   {
     id: 8,
@@ -97,6 +102,7 @@ const accommodationsList: AccommodationType[] = [
     available: 10,
     price1: 87568,
     price2: 105082,
+    isSoldOut: true,
   },
   {
     id: 9,
@@ -107,6 +113,7 @@ const accommodationsList: AccommodationType[] = [
     available: 50,
     price1: 40148,
     price2: 48202,
+    isSoldOut: true,
   },
 ];
 
@@ -152,23 +159,32 @@ export default function AccommodationsList({
       </Suspense>
       <tbody className="divide-y divide-border">
         {sortedList.map(
-          ({ ref, link, name, beds, available, price1, price2 }) => (
-            <tr key={ref} className="hover:bg-muted">
+          ({ ref, link, name, beds, available, price1, price2, isSoldOut }) => (
+            <tr
+              key={ref}
+              className={clsx("hover:bg-muted", {
+                [styles.strikethrough]: isSoldOut,
+              })}
+            >
               <td className="px-4 py-3">{name}</td>
               <td className="px-4 py-3">{available}</td>
               <td className="px-4 py-3">{beds}</td>
               <td className="px-4 py-3">{formatPrice(price1)}</td>
               <td className="px-4 py-3">{formatPrice(price2)}</td>
               <td className="px-4 py-3 font-medium">
-                <Link
-                  href={link}
-                  className="text-primary hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  prefetch={false}
-                >
-                  {ref}
-                </Link>
+                {isSoldOut ? (
+                  "Sold out!"
+                ) : (
+                  <Link
+                    href={link}
+                    className="text-primary hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    prefetch={false}
+                  >
+                    {ref}
+                  </Link>
+                )}
               </td>
             </tr>
           ),

@@ -1,0 +1,7 @@
+.strikethrough {
+  color: red;
+}
+
+.strikethrough > td:not(:last-child) {
+  text-decoration: line-through;
+}
