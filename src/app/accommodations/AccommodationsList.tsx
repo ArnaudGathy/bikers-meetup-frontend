@@ -5,7 +5,7 @@ import AccommodationsTableHeaders from "@/app/accommodations/AccommodationsTable
 import { Suspense } from "react";
 import { accommodationSortingSchema } from "@/constants/accommodations";
 import { isNumber, isString } from "remeda";
-import styles from "./AccommodationsList.module.css";
+import styles from "./accommodationsList.module.css";
 import { clsx } from "clsx";
 
 type AccommodationType = {
