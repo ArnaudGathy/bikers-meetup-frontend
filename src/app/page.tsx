@@ -195,6 +195,16 @@ export default function Home() {
             See accommodations
           </Button>
         </Link>
+        <Link
+          target="_blank"
+          rel="noreferrer"
+          href="https://calendar.google.com/calendar/u/0?cid=ZWMwMmEyY2QxZjMyZmRjYjMyYWVmMmI0ZTRhMjQyOTczYzRjMDE4MmY2MDdkZTYzM2ZlODUzYWU1MmIwZjdhYkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
+        >
+          <Button size="xxl" variant="secondary" className="flex gap-2">
+            <CalendarIcon className="size-6" />
+            Event planning
+          </Button>
+        </Link>
       </div>
     </div>
   );
