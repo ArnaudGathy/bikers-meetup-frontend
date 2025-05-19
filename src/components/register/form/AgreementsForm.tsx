@@ -17,7 +17,7 @@ export default function AgreementsForm({
         <FormFieldCheckbox
           form={form}
           name="hasAgreedToPay"
-          label={`I want to register to the international convention and I will pay the registration fee, eventual t-shirts and eventual accommodation within the next 15 days.`}
+          label={`I want to register to the international convention and I will pay the registration fee and eventual accommodation within the next 15 days.`}
           description={
             <>
               Therefore I accept the{" "}

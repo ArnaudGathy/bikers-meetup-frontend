@@ -112,8 +112,7 @@ export default function Register() {
                 </div>
                 <div>
                   You will receive a confirmation email shortly containing the
-                  payment information for the registration fee and the eventual
-                  t-shirts.
+                  payment information for the registration fee.
                 </div>
                 <div className="font-bold text-primary">
                   {"Please check your SPAMs if you didn't receive the email."}

@@ -12,25 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
-  SelectLabel,
-} from "@/components/ui/select";
-import { cn, formatPrice } from "@/lib/utils";
-import { T_SHIRT_UNIT_PRICE } from "@/constants/accommodations";
-import {
-  BookingModes,
-  tShirtSizeTranslation,
-  TShirtsSizes,
-} from "@/lib/schemas/registerFormSchema";
-import SizeChart from "@/components/SizeChart";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { BookingModes } from "@/lib/schemas/registerFormSchema";
 
 const getModeText = (mode: BookingModes) => {
   switch (mode) {
@@ -43,10 +25,6 @@ const getModeText = (mode: BookingModes) => {
   }
 };
 
-const sizes = Object.values(TShirtsSizes);
-const menSizes = sizes.slice(0, 8);
-const womenSizes = sizes.slice(8);
-
 export default function BookingForm({
   form,
 }: {
@@ -57,9 +35,6 @@ export default function BookingForm({
     bookingMode === BookingModes.YES ||
     bookingMode === BookingModes.WITH_SOMEONE;
   const isStayingWithSomeone = bookingMode === BookingModes.WITH_SOMEONE;
-
-  const amount = form.watch("tshirtsAmount");
-  const hasAmount = !!amount && Number(amount) > 0;
 
   return (
     <div>
@@ -130,97 +105,98 @@ export default function BookingForm({
           required={isBooking}
         />
 
-        <div className="flex gap-4">
-          <FormField
-            control={form.control}
-            name="tshirtsAmount"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>T-shirts</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger
-                      className={cn({ "text-muted-foreground": !field.value })}
-                    >
-                      <SelectValue placeholder="Select an amount" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {Array.from({ length: 11 }).map((_, index) => (
-                      <SelectItem
-                        key={index.toString()}
-                        value={index.toString()}
-                      >
-                        {index > 0
-                          ? `${index.toString()} for ${formatPrice(index * T_SHIRT_UNIT_PRICE)}`
-                          : `No t-shirt`}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormDescription>{`${formatPrice(T_SHIRT_UNIT_PRICE)} each`}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        {/* Disabled t-shirts sales before the event */}
+        {/*<div className="flex gap-4">*/}
+        {/*  <FormField*/}
+        {/*    control={form.control}*/}
+        {/*    name="tshirtsAmount"*/}
+        {/*    render={({ field }) => (*/}
+        {/*      <FormItem className="w-full">*/}
+        {/*        <FormLabel>T-shirts</FormLabel>*/}
+        {/*        <Select*/}
+        {/*          onValueChange={field.onChange}*/}
+        {/*          defaultValue={field.value}*/}
+        {/*        >*/}
+        {/*          <FormControl>*/}
+        {/*            <SelectTrigger*/}
+        {/*              className={cn({ "text-muted-foreground": !field.value })}*/}
+        {/*            >*/}
+        {/*              <SelectValue placeholder="Select an amount" />*/}
+        {/*            </SelectTrigger>*/}
+        {/*          </FormControl>*/}
+        {/*          <SelectContent>*/}
+        {/*            {Array.from({ length: 11 }).map((_, index) => (*/}
+        {/*              <SelectItem*/}
+        {/*                key={index.toString()}*/}
+        {/*                value={index.toString()}*/}
+        {/*              >*/}
+        {/*                {index > 0*/}
+        {/*                  ? `${index.toString()} for ${formatPrice(index * T_SHIRT_UNIT_PRICE)}`*/}
+        {/*                  : `No t-shirt`}*/}
+        {/*              </SelectItem>*/}
+        {/*            ))}*/}
+        {/*          </SelectContent>*/}
+        {/*        </Select>*/}
+        {/*        <FormDescription>{`${formatPrice(T_SHIRT_UNIT_PRICE)} each`}</FormDescription>*/}
+        {/*        <FormMessage />*/}
+        {/*      </FormItem>*/}
+        {/*    )}*/}
+        {/*  />*/}
 
-          <FormField
-            control={form.control}
-            name="tshirtsSize"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel required={hasAmount} disabled={!hasAmount}>
-                  Size
-                </FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  disabled={!hasAmount}
-                >
-                  <FormControl>
-                    <SelectTrigger
-                      className={cn({ "text-muted-foreground": !field.value })}
-                    >
-                      <SelectValue placeholder="Chose a size" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>{`Men's Sizes`}</SelectLabel>
-                      <SelectSeparator />
-                      {menSizes.map((size) => (
-                        <SelectItem key={size} value={size}>
-                          {tShirtSizeTranslation[size]}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                    <SelectGroup>
-                      <SelectLabel>{`Women's Sizes`}</SelectLabel>
-                      <SelectSeparator />
-                      {womenSizes.map((size) => (
-                        <SelectItem key={size} value={size}>
-                          {tShirtSizeTranslation[size]}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <FormDescription>
-                  <Dialog>
-                    <DialogTrigger className="cursor-pointer text-primary hover:underline">
-                      See size chart
-                    </DialogTrigger>
-                    <SizeChart />
-                  </Dialog>
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        {/*  <FormField*/}
+        {/*    control={form.control}*/}
+        {/*    name="tshirtsSize"*/}
+        {/*    render={({ field }) => (*/}
+        {/*      <FormItem className="w-full">*/}
+        {/*        <FormLabel required={hasAmount} disabled={!hasAmount}>*/}
+        {/*          Size*/}
+        {/*        </FormLabel>*/}
+        {/*        <Select*/}
+        {/*          onValueChange={field.onChange}*/}
+        {/*          defaultValue={field.value}*/}
+        {/*          disabled={!hasAmount}*/}
+        {/*        >*/}
+        {/*          <FormControl>*/}
+        {/*            <SelectTrigger*/}
+        {/*              className={cn({ "text-muted-foreground": !field.value })}*/}
+        {/*            >*/}
+        {/*              <SelectValue placeholder="Chose a size" />*/}
+        {/*            </SelectTrigger>*/}
+        {/*          </FormControl>*/}
+        {/*          <SelectContent>*/}
+        {/*            <SelectGroup>*/}
+        {/*              <SelectLabel>{`Men's Sizes`}</SelectLabel>*/}
+        {/*              <SelectSeparator />*/}
+        {/*              {menSizes.map((size) => (*/}
+        {/*                <SelectItem key={size} value={size}>*/}
+        {/*                  {tShirtSizeTranslation[size]}*/}
+        {/*                </SelectItem>*/}
+        {/*              ))}*/}
+        {/*            </SelectGroup>*/}
+        {/*            <SelectGroup>*/}
+        {/*              <SelectLabel>{`Women's Sizes`}</SelectLabel>*/}
+        {/*              <SelectSeparator />*/}
+        {/*              {womenSizes.map((size) => (*/}
+        {/*                <SelectItem key={size} value={size}>*/}
+        {/*                  {tShirtSizeTranslation[size]}*/}
+        {/*                </SelectItem>*/}
+        {/*              ))}*/}
+        {/*            </SelectGroup>*/}
+        {/*          </SelectContent>*/}
+        {/*        </Select>*/}
+        {/*        <FormDescription>*/}
+        {/*          <Dialog>*/}
+        {/*            <DialogTrigger className="cursor-pointer text-primary hover:underline">*/}
+        {/*              See size chart*/}
+        {/*            </DialogTrigger>*/}
+        {/*            <SizeChart />*/}
+        {/*          </Dialog>*/}
+        {/*        </FormDescription>*/}
+        {/*        <FormMessage />*/}
+        {/*      </FormItem>*/}
+        {/*    )}*/}
+        {/*  />*/}
+        {/*</div>*/}
       </div>
     </div>
   );

@@ -40,12 +40,12 @@ export default function TotalAndSubmitForm({
             <div>Registration fee</div>
             <div>{formatPrice(REGISTRATION_FEE)}</div>
           </div>
-          {hasTshirts && (
-            <div className="flex items-center justify-between">
-              <div>{`${amount} x T-shirt`}</div>
-              <div>{formatPrice(tshirtsTotal)}</div>
-            </div>
-          )}
+          {/*{hasTshirts && (*/}
+          {/*  <div className="flex items-center justify-between">*/}
+          {/*    <div>{`${amount} x T-shirt`}</div>*/}
+          {/*    <div>{formatPrice(tshirtsTotal)}</div>*/}
+          {/*  </div>*/}
+          {/*)}*/}
           <Separator />
           {hasTshirts && (
             <div className="flex items-center justify-between font-medium">
