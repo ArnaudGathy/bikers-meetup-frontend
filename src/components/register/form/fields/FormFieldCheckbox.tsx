@@ -8,7 +8,7 @@ import {
 import { FormField } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FieldPath, UseFormReturn } from "react-hook-form";
-import { RegisterForm } from "@/app/register/page";
+import { RegisterForm } from "@/app/register/page_old";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 

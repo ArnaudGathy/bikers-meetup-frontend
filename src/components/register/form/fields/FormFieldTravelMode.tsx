@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UseFormReturn } from "react-hook-form";
-import { RegisterForm } from "@/app/register/page";
+import { RegisterForm } from "@/app/register/page_old";
 import { cn } from "@/lib/utils";
 import {
   TravelModes,

@@ -2,7 +2,7 @@ import FormPartTitle from "@/components/register/FormPartTitle";
 import { UseFormReturn } from "react-hook-form";
 import FormFieldInput from "@/components/register/form/fields/FormFieldInput";
 import FormFieldPhoneNumber from "@/components/register/form/fields/FormFieldPhoneNumber";
-import { RegisterForm } from "@/app/register/page";
+import { RegisterForm } from "@/app/register/page_old";
 
 export default function InformationForm({
   form,

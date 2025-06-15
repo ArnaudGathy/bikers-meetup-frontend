@@ -1,6 +1,6 @@
 import FormPartTitle from "@/components/register/FormPartTitle";
 import { UseFormReturn } from "react-hook-form";
-import { RegisterForm } from "@/app/register/page";
+import { RegisterForm } from "@/app/register/page_old";
 import FormFieldCheckbox from "@/components/register/form/fields/FormFieldCheckbox";
 import FormFieldInput from "@/components/register/form/fields/FormFieldInput";
 import {

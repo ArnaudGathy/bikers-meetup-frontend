@@ -183,12 +183,10 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col items-center gap-4 md:flex-row">
-        <Link href="/register">
-          <Button size="xxl" className="flex gap-2">
-            <BookOpenIcon className="size-6" />
-            Register
-          </Button>
-        </Link>
+        <Button size="xxl" className="flex gap-2" disabled>
+          <BookOpenIcon className="size-6" />
+          Register
+        </Button>
         <Link href="/accommodations">
           <Button size="xxl" variant="secondary" className="flex gap-2">
             <HomeModernIcon className="size-6" />

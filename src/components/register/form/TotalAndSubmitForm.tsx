@@ -8,7 +8,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { UseFormReturn } from "react-hook-form";
-import { RegisterForm } from "@/app/register/page";
+import { RegisterForm } from "@/app/register/page_old";
 import { formatPrice } from "@/lib/utils";
 import {
   REGISTRATION_FEE,

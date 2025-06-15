@@ -1,5 +1,5 @@
 import { FieldPath, UseFormReturn } from "react-hook-form";
-import { RegisterForm } from "@/app/register/page";
+import { RegisterForm } from "@/app/register/page_old";
 import {
   FormControl,
   FormField,

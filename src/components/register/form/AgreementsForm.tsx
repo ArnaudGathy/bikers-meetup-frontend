@@ -1,8 +1,8 @@
 import FormPartTitle from "@/components/register/FormPartTitle";
 import { UseFormReturn } from "react-hook-form";
-import { RegisterForm } from "@/app/register/page";
 import FormFieldCheckbox from "@/components/register/form/fields/FormFieldCheckbox";
 import Link from "next/link";
+import { RegisterForm } from "@/app/register/page_old";
 
 export default function AgreementsForm({
   form,

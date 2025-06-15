@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/command";
 import { countries, Country } from "@/constants/countries";
 import { FieldPath, UseFormReturn } from "react-hook-form";
-import { RegisterForm } from "@/app/register/page";
+import { RegisterForm } from "@/app/register/page_old";
 import { useState } from "react";
 import CountryFlag from "@/components/CountryFlag";
 

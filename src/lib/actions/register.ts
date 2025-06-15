@@ -1,7 +1,7 @@
 "use server";
 import "server-only";
 
-import { RegisterForm } from "@/app/register/page";
+import { RegisterForm } from "@/app/register/page_old";
 import { getISODate, throwIfUnauthorized } from "@/lib/utils";
 import { registerSchema } from "@/lib/schemas/registerSchema";
 import prisma from "@/lib/prisma";
